@@ -13,6 +13,7 @@
     "dev": "concurrently \"pnpm webxdc-dev\" \"pnpm vite-dev\""
   },
   "dependencies": {
+    "@types/lodash": "^4.14.185",
     "@types/prop-types": "^15.7.5",
     "lodash": "^4.17.4",
     "prop-types": "^15.6.0",
