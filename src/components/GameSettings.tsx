@@ -1,28 +1,28 @@
-import * as React from 'react';
-import { connect } from 'react-redux';
-import isNaN from 'lodash/isNaN';
-import tinycolor from 'tinycolor2';
+import * as React from 'react'
+import { connect } from 'react-redux'
+import isNaN from 'lodash/isNaN'
+import tinycolor from 'tinycolor2'
+import { initGame } from '../actions/game'
+import type { GameSettingsProps, GameSettingsState } from '~/interfaces'
 
-import { initGame } from '../actions/game';
-
-class GameSettings extends React.Component {
-  constructor(props) {
-    super(props);
+class GameSettings extends React.Component<GameSettingsProps> {
+  state: GameSettingsState
+  constructor(props: GameSettingsProps) {
+    super(props)
     this.state = {
       rows: props.rows,
       cols: props.cols,
       players: props.players,
-    };
+    }
   }
 
   dimensionIsValid = (value) => {
-    const parsed = parseInt(value, 10);
+    const parsed = parseInt(value, 10)
 
-    if (isNaN(parsed)) {
-      return false;
-    }
+    if (isNaN(parsed))
+      return false
 
-    return parsed >= 3 && parsed <= 10;
+    return parsed >= 3 && parsed <= 10
   }
 
   changeRows = (e) => {
@@ -38,60 +38,57 @@ class GameSettings extends React.Component {
   }
 
   addPlayer = () => {
-    if (this.state.players.length >= 6) {
-      return;
-    }
+    if (this.state.players.length >= 6)
+      return
 
-    const players = this.state.players;
+    const players = this.state.players
     players.push({
       alive: true,
       color: tinycolor.random().toHexString(),
-    });
+    })
     this.setState({
       players,
-    });
-  };
+    })
+  }
 
-  removePlayer = (index) => () => {
-    if (this.state.players.length <= 2) {
-      return;
-    }
+  removePlayer = index => () => {
+    if (this.state.players.length <= 2)
+      return
 
-    const players = this.state.players;
-    players.splice(index, 1);
+    const players = this.state.players
+    players.splice(index, 1)
     this.setState({
       players,
-    });
-  };
+    })
+  }
 
-  changePlayerColor = (index) => (e) => {
-    const color = tinycolor(e.target.value);
-    if (!color.isValid()) {
-      return;
-    }
+  changePlayerColor = index => (e) => {
+    const color = tinycolor(e.target.value)
+    if (!color.isValid())
+      return
 
-    const players = this.state.players;
-    players[index].color = color.toHexString();
+    const players = this.state.players
+    players[index].color = color.toHexString()
     this.setState({
       players,
-    });
-  };
+    })
+  }
 
   changeSettings = () => {
-    const { rows, cols } = this.state;
-    const rowsValue = this.dimensionIsValid(rows) ? parseInt(rows, 10) : this.props.rows;
-    const colsValue = this.dimensionIsValid(cols) ? parseInt(cols, 10) : this.props.cols;
+    const { rows, cols } = this.state
+    const rowsValue = this.dimensionIsValid(rows) ? parseInt(rows, 10) : this.props.rows
+    const colsValue = this.dimensionIsValid(cols) ? parseInt(cols, 10) : this.props.cols
     this.props.initGame(
       rowsValue,
       colsValue,
-      this.state.players
-    );
+      this.state.players,
+    )
     this.setState({
       rows: rowsValue,
       cols: colsValue,
       players: this.state.players,
     })
-  };
+  }
 
   render() {
     return (
@@ -136,26 +133,26 @@ class GameSettings extends React.Component {
         <p>Changing the settings will reset the game.</p>
         <button onClick={this.changeSettings}>Save</button>
       </div>
-    );
+    )
   }
 }
 
 const mapStateToProps = (state) => {
-  const {players, rows, cols} = state.game.present;
+  const { players, rows, cols } = state.game.present
 
   return {
     players,
     rows,
     cols,
   }
-};
+}
 
 const mapDispatchToProps = (dispatch) => {
   return {
     initGame: (rows, cols, players) => {
-      dispatch(initGame(rows, cols, players));
+      dispatch(initGame(rows, cols, players))
     },
   }
-};
+}
 
-export default connect(mapStateToProps, mapDispatchToProps)(GameSettings);
+export default connect(mapStateToProps, mapDispatchToProps)(GameSettings)

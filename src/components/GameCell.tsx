@@ -1,5 +1,5 @@
 // import * as React from 'react'
-import PropTypes from 'prop-types'
+// import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
 import { clickCell } from '../actions/game'
@@ -41,15 +41,15 @@ const GameCell = ({
   )
 }
 
-GameCell.propTypes = {
-  x: PropTypes.number,
-  y: PropTypes.number,
-  clickCell: PropTypes.func,
-  status: PropTypes.object,
-  players: PropTypes.array,
-  currentPlayer: PropTypes.number,
-  clicksToBlow: PropTypes.number,
-}
+// GameCell.propTypes = {
+//   x: PropTypes.number,
+//   y: PropTypes.number,
+//   clickCell: PropTypes.func,
+//   status: PropTypes.object,
+//   players: PropTypes.array,
+//   currentPlayer: PropTypes.number,
+//   clicksToBlow: PropTypes.number,
+// }
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {

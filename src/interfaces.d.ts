@@ -1,5 +1,5 @@
 export interface AppProps {
-  state: AppState
+  state?: AppState
   gameEnded: boolean
   currentPlayer: number
   reset: () => unknown
@@ -41,4 +41,15 @@ export interface GameLogicProps {
   y: number
   turn: number
   cellsActivated: number
+}
+
+export interface GameSettingsState {
+  rows: string
+  cols: string
+  players: Player[]
+}
+
+export interface GameSettingsProps extends GameSettingsState {
+  show: boolean
+  initGame: (rows, cols, players) => unknown
 }
