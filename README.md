@@ -1,6 +1,6 @@
-# DeltaConnect
+# Chain Reaction
 
-Connect 4 board game clon for Delta Chat
+Version of popular Chain Reaction game for Delta Chat
 
 ## Usage
 
