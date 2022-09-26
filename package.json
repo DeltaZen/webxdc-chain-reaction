@@ -1,5 +1,5 @@
 {
-  "name": "c4",
+  "name": "chain-reaction",
   "private": true,
   "packageManager": "pnpm@7.3.0",
   "scripts": {
