@@ -9,16 +9,21 @@ import type { GameGridProps } from '~/interfaces'
 const GameGrid = (props: GameGridProps) => {
   const style = {
     borderColor: 'grey',
+    display: 'grid',
+    // gridTemplateRows: `repeat(${props.rows}, 1fr)`,
+    gridTemplateColumns: `repeat(${props.cols}, 1fr)`,
   }
   if (props.currentPlayer)
     style.borderColor = props.currentPlayer.color
 
+  // const lineMaxWidth = 500 / props.cols
+  const minHeight = `${50 * props.rows}px`
   return (
     <div className="game-grid" style={style}>
-      {range(props.rows).map((row) => {
+      {range(props.cols).map((col) => {
         return (
-          <div className="game-line" key={`row-${row}`}>
-            {range(props.cols).map((col) => {
+          <div className="game-line" key={`col-${col}`} style={{ gridTemplateRows: `repeat(${props.rows}, 1fr)`, minHeight }}>
+            {range(props.rows).map((row) => {
               return (
                 <GameCell
                   key={`cell-${row}-${col}`}

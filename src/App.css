@@ -5,9 +5,15 @@
 
 .logo {
   display: inline-block;
-  animation: spin infinite 3s linear;
+  -webkit-animation: spin infinite 3s linear;
+          animation: spin infinite 3s linear;
   width: 60px;
   height: 60px;
+}
+
+@-webkit-keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
 
 @keyframes spin {
@@ -103,21 +109,37 @@ input[type=color] {
 .game-grid {
   margin: auto;
   border: 3px solid grey;
-  display: inline-block;
+  display: grid;
+
+  text-align: center;
+
+  /* margin: 1rem auto; */
+  /* padding: 1rem; */
+
+  width: 90vw;
+  max-width: min(90vw, 900px);
+
+  /* border-radius: 2rem; */
 }
 
 .game-line {
-  height: auto;
+  display: grid;
+  /* flex-direction: column; */
+  /* width: 100%; */
+  /* height: auto; */
+  /* min-height: 500px; */
 }
 
 .game-cell {
-    height: 60px;
-    width: 60px;
-    background-color: black;
-    display: inline-block;
-    border: 1px solid grey;
-    box-sizing: border-box;
-    vertical-align: bottom;
+  width: 100%;
+  height: 100%;
+  margin: auto;
+  
+  background-color: black;
+  display: inline-block;
+  border: 1px solid grey;
+  box-sizing: border-box;
+  vertical-align: bottom;
 }
 
 .ball {
@@ -142,20 +164,48 @@ input[type=color] {
   margin: 15% 15%;
 }
 
+/* @media screen and (min-width: 500px) {
+  .game-grid {
+    width: 500px;
+  }
+} */
+
 .shaking {
-  animation-name: shake;
-	animation-duration: 3s;
+  -webkit-animation-name: shake;
+          animation-name: shake;
+	-webkit-animation-duration: 3s;
+	        animation-duration: 3s;
 	transform-origin:50% 50%;
-	animation-iteration-count: infinite;
-  animation-timing-function: linear;
+	-webkit-animation-iteration-count: infinite;
+	        animation-iteration-count: infinite;
+  -webkit-animation-timing-function: linear;
+          animation-timing-function: linear;
 }
 
 .shaking-more {
-  animation-name: shakemore;
-	animation-duration: 0.6s;
+  -webkit-animation-name: shakemore;
+          animation-name: shakemore;
+	-webkit-animation-duration: 0.6s;
+	        animation-duration: 0.6s;
 	transform-origin:50% 50%;
-	animation-iteration-count: infinite;
-  animation-timing-function: linear;
+	-webkit-animation-iteration-count: infinite;
+	        animation-iteration-count: infinite;
+  -webkit-animation-timing-function: linear;
+          animation-timing-function: linear;
+}
+
+@-webkit-keyframes shake {
+  0% { transform: translate(2px, 1px) rotate(0deg); }
+	10% { transform: translate(-1px, -2px) rotate(-1deg); }
+	20% { transform: translate(-3px, 0px) rotate(1deg); }
+	30% { transform: translate(0px, 2px) rotate(0deg); }
+	40% { transform: translate(1px, -1px) rotate(1deg); }
+	50% { transform: translate(-1px, 2px) rotate(-1deg); }
+	60% { transform: translate(-3px, 1px) rotate(0deg); }
+	70% { transform: translate(2px, 1px) rotate(-1deg); }
+	80% { transform: translate(-1px, -1px) rotate(1deg); }
+	90% { transform: translate(2px, 2px) rotate(0deg); }
+	100% { transform: translate(1px, -2px) rotate(-1deg); }
 }
 
 @keyframes shake {
@@ -170,6 +220,20 @@ input[type=color] {
 	80% { transform: translate(-1px, -1px) rotate(1deg); }
 	90% { transform: translate(2px, 2px) rotate(0deg); }
 	100% { transform: translate(1px, -2px) rotate(-1deg); }
+}
+
+@-webkit-keyframes shakemore {
+  0% { transform: translate(4px, 2px) rotate(0deg); }
+	10% { transform: translate(-2px, -4px) rotate(-1deg); }
+	20% { transform: translate(-6px, 0px) rotate(1deg); }
+	30% { transform: translate(0px, 4px) rotate(0deg); }
+	40% { transform: translate(2px, -2px) rotate(1deg); }
+	50% { transform: translate(-2px, 4px) rotate(-1deg); }
+	60% { transform: translate(-6px, 2px) rotate(0deg); }
+	70% { transform: translate(4px, 2px) rotate(-1deg); }
+	80% { transform: translate(-2px, -2px) rotate(1deg); }
+	90% { transform: translate(4px, 4px) rotate(0deg); }
+	100% { transform: translate(2px, -4px) rotate(-1deg); }
 }
 
 @keyframes shakemore {
