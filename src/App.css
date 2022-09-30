@@ -7,8 +7,8 @@
   display: inline-block;
   -webkit-animation: spin infinite 3s linear;
           animation: spin infinite 3s linear;
-  width: 60px;
-  height: 60px;
+  width: 2.5rem;
+  height: 2.5rem;
 }
 
 @-webkit-keyframes spin {
@@ -23,9 +23,12 @@
 
 .header {
   background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
+  padding: 1rem;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
 }
 
 .title {

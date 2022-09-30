@@ -31,15 +31,12 @@ class App extends Component<AppProps> {
       <div className="app">
         <header className="header">
           <div className="logo">
-            <Ball color="#FF0000" clicksToBlow={3} className="large-ball" />
+            <Ball color="#0099ff" clicksToBlow={3} className="large-ball" />
           </div>
-          <div className="logo">
-            <Ball color="#1EF127" clicksToBlow={3} className="large-ball" />
-          </div>
+          <h1 className="title">Chain Reaction</h1>
           <div className="logo">
             <Ball color="#0099ff" clicksToBlow={3} className="large-ball" />
           </div>
-          <h1 className="title">Welcome to React Chain Reaction</h1>
         </header>
         <div ref={x => this.settings = x} className="app-settings">
           <div className="settings-wrapper">
