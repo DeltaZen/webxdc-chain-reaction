@@ -5,7 +5,7 @@ import { Provider } from 'react-redux'
 import keys from 'lodash/keys'
 import App from './App'
 
-import configureStore from './config/store'
+import { store } from './config/store'
 import { initGame } from './actions/game'
 
 const tempState = localStorage.getItem('reduxState')
@@ -14,7 +14,7 @@ const persistedState
     ? JSON.parse(tempState)
     : {}
 
-const store = configureStore(persistedState)
+// const store = configureStore(persistedState)
 
 store.subscribe(() => {
   localStorage.setItem('reduxState', JSON.stringify(store.getState()))
