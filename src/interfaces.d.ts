@@ -2,6 +2,9 @@ export interface AppProps {
   state?: AppState
   gameEnded: boolean
   currentPlayer: number
+  players: Player[]
+  playerName: string
+  playerAddr: string
   reset: () => unknown
 }
 
