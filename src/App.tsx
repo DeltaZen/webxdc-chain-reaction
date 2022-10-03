@@ -27,6 +27,8 @@ class App extends Component<AppProps> {
   }
 
   render() {
+    const currentPlayerName = this.props.players[this.props.currentPlayer].nick
+    // console.log(this.props)
     return (
       <div className="app">
         <header className="header">
@@ -47,8 +49,8 @@ class App extends Component<AppProps> {
         </div>
         <p className="intro">
           {this.props.gameEnded
-            ? <span className="victory">{`Player ${this.props.currentPlayer + 1} won!`}</span>
-            : <span>{`Player ${this.props.currentPlayer + 1} turn.`}</span>
+            ? <span className="victory">{`${currentPlayerName} won!`}</span>
+            : <span>{`${currentPlayerName} turn.`}</span>
           }
         </p>
         <HistoryButtons />
@@ -72,9 +74,13 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 const mapStateToProps = (state) => {
+  // console.log(state.game.present)
   return {
     currentPlayer: state.game.present.currentPlayer,
     gameEnded: state.game.present.gameEnded,
+    playerName: state.game.present.playerName,
+    playerAddr: state.game.present.playerAddr,
+    players: state.game.present.players,
   }
 }
 
