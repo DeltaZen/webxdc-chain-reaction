@@ -8,10 +8,12 @@ const PLAYERS = [
   {
     color: '#FF0000',
     alive: true,
+    nick: 'Player 1',
   },
   {
     color: '#1EF127',
     alive: true,
+    nick: 'Player 2',
   },
 ]
 
