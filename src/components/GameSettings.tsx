@@ -45,6 +45,7 @@ class GameSettings extends React.Component<GameSettingsProps> {
     players.push({
       alive: true,
       color: tinycolor.random().toHexString(),
+      nick: 'Unknown name',
     })
     this.setState({
       players,
@@ -118,7 +119,7 @@ class GameSettings extends React.Component<GameSettingsProps> {
           </div>
           {this.state.players.map((player, index) => (
             <div key={`player-${index}`} className="form-group">
-              <label htmlFor={`player-${index}`}>Player {index + 1}</label>
+              <label htmlFor={`player-${index}`}>{player.nick ?? 'Unknown player'}</label>
               <input
                 onChange={this.changePlayerColor(index)}
                 name={`player-${index}`}
