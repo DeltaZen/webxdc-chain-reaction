@@ -29,7 +29,7 @@ const GameCell = ({
     : clickCell
 
   return (
-    <div className="game-cell" onClick={onCellClick} style={cellStyle}>
+    <div className={`game-cell ${x}-${y}`} onClick={onCellClick} style={cellStyle}>
       {status.player !== -1
         ? <Ball
           color={players[status.player].color}

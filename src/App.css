@@ -137,12 +137,28 @@ input[type=color] {
   width: 100%;
   height: 100%;
   margin: auto;
+
+  aspect-ratio: 1;
   
   background-color: black;
   display: inline-block;
   border: 1px solid grey;
   box-sizing: border-box;
   vertical-align: bottom;
+}
+
+@supports not (aspect-ratio: 1 / 1) {
+  .game-cell::before {
+    float: left;
+    padding-top: 100%;
+    content: "";
+  }
+
+  .game-cell::after {
+    display: block;
+    content: "";
+    clear: both;
+  }
 }
 
 .ball {
