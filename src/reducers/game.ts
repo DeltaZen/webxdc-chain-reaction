@@ -6,6 +6,9 @@ import GameLogic from '../config/GameLogic'
 
 import type { Player } from '../interfaces'
 
+const playerName = window.webxdc.selfName
+const playerAddr = window.webxdc.selfAddr
+
 const INITIAL_STATE = {
   grid: {},
   currentPlayer: 0,
@@ -14,6 +17,8 @@ const INITIAL_STATE = {
   cols: 0,
   turn: 0,
   gameEnded: false,
+  playerName,
+  playerAddr,
 }
 
 const createEmptyGrid = (rows, cols) => {
@@ -58,6 +63,8 @@ const game = (state = INITIAL_STATE, action) => {
         currentPlayer: 0,
         turn: 0,
         gameEnded: false,
+        playerName,
+        playerAddr,
       }
     }
     case RESET_GAME: {
@@ -71,6 +78,8 @@ const game = (state = INITIAL_STATE, action) => {
         players,
         turn: 0,
         gameEnded: false,
+        playerName,
+        playerAddr,
       }
     }
     case CLICK_CELL: {
