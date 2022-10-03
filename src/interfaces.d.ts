@@ -12,6 +12,8 @@ export interface AppState {
 export interface Player {
   color: string
   alive: boolean
+  nick?: string
+  address?: string
 }
 
 export interface GameCellProps {
