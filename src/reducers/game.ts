@@ -37,12 +37,14 @@ const createEmptyGrid = (rows, cols) => {
   return grid
 }
 
-const ressucitatePlayers = (players) => {
+const ressucitatePlayers = (players: Player[]) => {
   const newPlayers = [] as Player[]
   players.forEach((player) => {
     newPlayers.push({
       color: player.color,
       alive: true,
+      nick: player.nick,
+      address: player.address,
     })
   })
 
