@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import isNaN from 'lodash/isNaN'
 import tinycolor from 'tinycolor2'
 import { initGame } from '../actions/game'
+import { modifyPlayer } from '~/reducers/game'
 import type { GameSettingsProps, GameSettingsState } from '~/interfaces'
 
 class GameSettings extends React.Component<GameSettingsProps> {
@@ -13,6 +14,8 @@ class GameSettings extends React.Component<GameSettingsProps> {
       rows: props.rows,
       cols: props.cols,
       players: props.players,
+      playerName: props.playerName,
+      playerAddr: props.playerAddr,
     }
   }
 
@@ -79,10 +82,11 @@ class GameSettings extends React.Component<GameSettingsProps> {
     const { rows, cols } = this.state
     const rowsValue = this.dimensionIsValid(rows) ? parseInt(rows, 10) : this.props.rows
     const colsValue = this.dimensionIsValid(cols) ? parseInt(cols, 10) : this.props.cols
+    const players = modifyPlayer(this.state.players, 0, this.state.playerName, this.state.playerAddr)
     this.props.initGame(
       rowsValue,
       colsValue,
-      this.state.players,
+      players,
     )
     this.setState({
       rows: rowsValue,
@@ -132,19 +136,21 @@ class GameSettings extends React.Component<GameSettingsProps> {
         </div>
         {this.state.players.length < 6 && <button onClick={this.addPlayer}>Add a player</button>}
         <p>Changing the settings will reset the game.</p>
-        <button onClick={this.changeSettings}>Save</button>
+        <button onClick={this.changeSettings}>Create</button>
       </div>
     )
   }
 }
 
 const mapStateToProps = (state) => {
-  const { players, rows, cols } = state.game.present
+  const { players, rows, cols, playerName, playerAddr } = state.game.present
 
   return {
     players,
     rows,
     cols,
+    playerName,
+    playerAddr,
   }
 }
 
