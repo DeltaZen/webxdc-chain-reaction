@@ -28,6 +28,7 @@ export interface GameCellProps {
   currentPlayer: number
   clicksToBlow: number
   gameEnded: boolean
+  playerAddr: string
 }
 
 export interface GameGridProps {
