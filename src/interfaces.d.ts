@@ -52,6 +52,8 @@ export interface GameSettingsState {
   rows: string
   cols: string
   players: Player[]
+  playerName: string
+  playerAddr: string
 }
 
 export interface GameSettingsProps extends GameSettingsState {
