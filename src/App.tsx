@@ -28,7 +28,7 @@ class App extends Component<AppProps> {
 
   render() {
     const currentPlayerName = this.props.players[this.props.currentPlayer].nick
-    // console.log(this.props)
+    // console.log(this.props.players)
     return (
       <div className="app">
         <header className="header">

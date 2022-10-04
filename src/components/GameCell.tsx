@@ -17,6 +17,7 @@ const GameCell = ({
   currentPlayer,
   clicksToBlow,
   gameEnded,
+  playerAddr,
 }: GameCellProps) => {
   const cellStyle = {
     borderColor: 'grey',
@@ -24,9 +25,10 @@ const GameCell = ({
   if (currentPlayer !== -1)
     cellStyle.borderColor = players[currentPlayer].color
 
+  // console.log(players[currentPlayer].address)
   const onCellClick = gameEnded || (status.player !== -1 && status.player !== currentPlayer)
     ? null
-    : clickCell
+    : players[currentPlayer].address === playerAddr ? clickCell : null
 
   return (
     <div className={`game-cell ${x}-${y}`} onClick={onCellClick} style={cellStyle}>
@@ -54,13 +56,14 @@ const GameCell = ({
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     clickCell: () => {
+      // console.log(ownProps)
       dispatch(clickCell(ownProps.x, ownProps.y))
     },
   }
 }
 
 const mapStateToProps = (state, ownProps) => {
-  const { rows, cols, players, grid, currentPlayer, gameEnded } = state.game.present
+  const { rows, cols, players, grid, currentPlayer, gameEnded, playerAddr } = state.game.present
   const logic = new GameLogic(rows, cols, players, grid)
   return {
     status: grid[ownProps.x][ownProps.y],
@@ -68,6 +71,7 @@ const mapStateToProps = (state, ownProps) => {
     currentPlayer,
     clicksToBlow: logic.cellWillBlowIn(ownProps.x, ownProps.y),
     gameEnded,
+    playerAddr,
   }
 }
 
