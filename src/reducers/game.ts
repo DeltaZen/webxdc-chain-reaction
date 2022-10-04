@@ -1,7 +1,7 @@
 import range from 'lodash/range'
 import undoable from 'redux-undo'
 
-import { CLICK_CELL, INIT_GAME, RESET_GAME } from '../actions/game'
+import { CLICK_CELL, INIT_GAME, MODIFY_PLAYER, RESET_GAME } from '../actions/game'
 import GameLogic from '../config/GameLogic'
 
 import type { Player } from '../interfaces'
@@ -51,6 +51,14 @@ const ressucitatePlayers = (players: Player[]) => {
   return newPlayers
 }
 
+export const modifyPlayer = (players: Player[], index: number, nick: string, address: string) => {
+  const newPlayers = players
+  newPlayers[index].nick = nick
+  newPlayers[index].address = address
+
+  return newPlayers
+}
+
 const game = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case INIT_GAME: {
@@ -95,6 +103,19 @@ const game = (state = INITIAL_STATE, action) => {
         return {
           ...state,
           ...newState,
+        }
+      }
+
+      return state
+    }
+    case MODIFY_PLAYER: {
+      const { index, nick, address } = action.payload
+      const { players } = state
+
+      if (!state.gameEnded) {
+        return {
+          ...state,
+          players: modifyPlayer(players, index, nick, address),
         }
       }
 
