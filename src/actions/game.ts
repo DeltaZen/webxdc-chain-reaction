@@ -1,6 +1,7 @@
 export const INIT_GAME = 'INIT_GAME'
 export const RESET_GAME = 'RESET_GAME'
 export const CLICK_CELL = 'CLICK_CELL'
+export const MODIFY_PLAYER = 'MODIFY_PLAYER'
 
 const ROWS = 6
 const COLS = 6
@@ -40,6 +41,17 @@ export const clickCell = (x, y) => {
     payload: {
       x,
       y,
+    },
+  }
+}
+
+export const modifyPlayer = (index: number, nick: string, address: string) => {
+  return {
+    type: MODIFY_PLAYER,
+    payload: {
+      index,
+      nick,
+      address,
     },
   }
 }
