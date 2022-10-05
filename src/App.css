@@ -80,6 +80,13 @@
   margin-left: 15px;
 }
 
+.player-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
 input[type=number] {
   padding: 5px;
   font-size: 1em;
