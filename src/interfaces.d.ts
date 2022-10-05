@@ -9,6 +9,7 @@ export interface AppProps {
   reset: () => unknown
   update: (state: UpdateState) => void
   adminUpdate: (state: UpdateState) => void
+  modifyPlayer: (nick: string, address: string) => void
 }
 
 export interface AppState {
