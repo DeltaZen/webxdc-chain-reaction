@@ -284,4 +284,12 @@ button {
   background-color: grey;
   padding: 8px 12px;
   font-size: 1em;
+
+  cursor: pointer
+}
+
+button:disabled {
+  background-color: rgba(88, 88, 88, 0.452);
+  color:#222;
+  cursor: not-allowed;
 }
