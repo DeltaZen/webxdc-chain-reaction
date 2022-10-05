@@ -1,7 +1,7 @@
 import range from 'lodash/range'
 import undoable from 'redux-undo'
 
-import { CLICK_CELL, INIT_GAME, MODIFY_PLAYER, RESET_GAME } from '../actions/game'
+import { CLICK_CELL, INIT_GAME, MODIFY_PLAYER, RESET_GAME, UPDATE_FULL_STATE } from '../actions/game'
 import GameLogic from '../config/GameLogic'
 
 import type { Player } from '../interfaces'
@@ -78,8 +78,6 @@ const game = (state = INITIAL_STATE, action) => {
             currentPlayer: 0,
             turn: 0,
             gameEnded: false,
-            playerName,
-            playerAddr,
           },
         },
         info: text,
@@ -153,6 +151,13 @@ const game = (state = INITIAL_STATE, action) => {
       }
 
       return state
+    }
+    case UPDATE_FULL_STATE: {
+      const state = action.payload
+
+      return {
+        ...state, playerName, playerAddr,
+      }
     }
     default:
       return state
