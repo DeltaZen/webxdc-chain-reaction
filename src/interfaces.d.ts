@@ -1,6 +1,7 @@
 export interface AppProps {
   state?: AppState
   gameEnded: boolean
+  gameStarted: boolean
   currentPlayer: number
   players: Player[]
   playerName: string
@@ -28,6 +29,7 @@ export interface GameCellProps {
   players: Player[]
   currentPlayer: number
   clicksToBlow: number
+  gameStarted: boolean
   gameEnded: boolean
   playerAddr: string
 }
@@ -75,6 +77,7 @@ export interface UpdateState {
   rows: number
   cols: number
   turn: number
+  gameStarted: boolean
   gameEnded: boolean
   playerName: string
   playerAddr: string
