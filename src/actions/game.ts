@@ -49,11 +49,10 @@ export const clickCell = (x, y) => {
   }
 }
 
-export const modifyPlayer = (index: number, nick: string, address: string) => {
+export const modifyPlayer = (nick: string, address: string) => {
   return {
     type: MODIFY_PLAYER,
     payload: {
-      index,
       nick,
       address,
     },

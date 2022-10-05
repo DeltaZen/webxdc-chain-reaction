@@ -52,7 +52,11 @@ const ressucitatePlayers = (players: Player[]) => {
   return newPlayers
 }
 
-export const modifyPlayer = (players: Player[], index: number, nick: string, address: string) => {
+export const modifyPlayer = (players: Player[], nick: string, address: string) => {
+  const index = players.findIndex(p => !p.address)
+  if (index === -1)
+    return players
+
   const newPlayers = players
   newPlayers[index].nick = nick
   newPlayers[index].address = address
@@ -144,13 +148,26 @@ const game = (state = INITIAL_STATE, action) => {
       return state
     }
     case MODIFY_PLAYER: {
-      const { index, nick, address } = action.payload
+      const { nick, address } = action.payload
       const { players } = state
+
+      const text = `${nick} joined Chain Reaction game!`
+      const newPlayers = modifyPlayer(players, nick, address)
+      window.webxdc.sendUpdate({
+        payload: {
+          type: MODIFY_PLAYER,
+          state: {
+            ...state,
+            players: newPlayers,
+          },
+        },
+        info: text,
+      }, text)
 
       if (!state.gameStarted) {
         return {
           ...state,
-          players: modifyPlayer(players, index, nick, address),
+          players: newPlayers,
         }
       }
 
@@ -167,7 +184,7 @@ const game = (state = INITIAL_STATE, action) => {
       const state = action.payload
 
       // send update as well
-      const text = `It's ${state.players[state.currentPlayer].nick} turn [update approved by admin]`
+      const text = '[update approved by admin]'
       state.gameStarted && window.webxdc.sendUpdate({
         payload: {
           type: UPDATE_ADMIN_STATE,
@@ -175,7 +192,6 @@ const game = (state = INITIAL_STATE, action) => {
             ...state,
           },
         },
-        info: text,
       }, text)
 
       return {
