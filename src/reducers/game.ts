@@ -1,7 +1,7 @@
 import range from 'lodash/range'
 import undoable from 'redux-undo'
 
-import { CLICK_CELL, INIT_GAME, MODIFY_PLAYER, RESET_GAME, UPDATE_FULL_STATE } from '../actions/game'
+import { CLICK_CELL, INIT_GAME, MODIFY_PLAYER, RESET_GAME, UPDATE_ADMIN_STATE, UPDATE_FULL_STATE } from '../actions/game'
 import GameLogic from '../config/GameLogic'
 
 import type { Player } from '../interfaces'
@@ -12,7 +12,7 @@ const playerAddr = window.webxdc.selfAddr
 const INITIAL_STATE = {
   grid: {},
   currentPlayer: 0,
-  players: [],
+  players: [] as Player[],
   rows: 0,
   cols: 0,
   turn: 0,
@@ -68,9 +68,9 @@ const game = (state = INITIAL_STATE, action) => {
 
       // send update as well
       const text = `${players[0].nick} created a Chain Reaction game. Join!`
-      window.webxdc.sendUpdate({
+      players[0]?.address && window.webxdc.sendUpdate({
         payload: {
-          type: CLICK_CELL,
+          type: INIT_GAME,
           state: {
             grid,
             rows,
@@ -158,6 +158,25 @@ const game = (state = INITIAL_STATE, action) => {
     }
     case UPDATE_FULL_STATE: {
       const state = action.payload
+
+      return {
+        ...state, playerName, playerAddr,
+      }
+    }
+    case UPDATE_ADMIN_STATE: {
+      const state = action.payload
+
+      // send update as well
+      const text = `It's ${state.players[state.currentPlayer].nick} turn [update approved by admin]`
+      state.gameStarted && window.webxdc.sendUpdate({
+        payload: {
+          type: UPDATE_ADMIN_STATE,
+          state: {
+            ...state,
+          },
+        },
+        info: text,
+      }, text)
 
       return {
         ...state, playerName, playerAddr,

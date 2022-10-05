@@ -5,6 +5,7 @@ export const RESET_GAME = 'RESET_GAME'
 export const CLICK_CELL = 'CLICK_CELL'
 export const MODIFY_PLAYER = 'MODIFY_PLAYER'
 export const UPDATE_FULL_STATE = 'UPDATE_FULL_STATE'
+export const UPDATE_ADMIN_STATE = 'UPDATE_ADMIN_STATE'
 
 const ROWS = 6
 const COLS = 6
@@ -62,6 +63,13 @@ export const modifyPlayer = (index: number, nick: string, address: string) => {
 export const updateState = (state: UpdateState) => {
   return {
     type: UPDATE_FULL_STATE,
+    payload: { ...state },
+  }
+}
+
+export const updateAdminState = (state: UpdateState) => {
+  return {
+    type: UPDATE_ADMIN_STATE,
     payload: { ...state },
   }
 }
