@@ -83,7 +83,7 @@ class GameSettings extends React.Component<GameSettingsProps> {
     const { rows, cols } = this.state
     const rowsValue = this.dimensionIsValid(rows) ? parseInt(rows, 10) : this.props.rows
     const colsValue = this.dimensionIsValid(cols) ? parseInt(cols, 10) : this.props.cols
-    const players = modifyPlayer(this.state.players, 0, this.state.playerName, this.state.playerAddr)
+    const players = modifyPlayer(this.state.players, this.state.playerName, this.state.playerAddr)
     this.props.initGame(
       rowsValue,
       colsValue,
