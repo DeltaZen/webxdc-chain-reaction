@@ -25,8 +25,10 @@ const GameCell = ({
   if (currentPlayer !== -1)
     cellStyle.borderColor = players[currentPlayer].color
 
+  const isFull = players.filter(p => p.address).length === players.length
+
   // console.log(players[currentPlayer].address)
-  const onCellClick = gameEnded || (status.player !== -1 && status.player !== currentPlayer)
+  const onCellClick = gameEnded || !isFull || (status.player !== -1 && status.player !== currentPlayer)
     ? null
     : players[currentPlayer].address === playerAddr ? clickCell : null
 
