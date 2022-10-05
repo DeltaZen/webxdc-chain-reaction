@@ -8,6 +8,7 @@ export interface AppProps {
   playerAddr: string
   reset: () => unknown
   update: (state: UpdateState) => void
+  adminUpdate: (state: UpdateState) => void
 }
 
 export interface AppState {
@@ -79,6 +80,7 @@ export interface UpdateState {
   turn: number
   gameStarted: boolean
   gameEnded: boolean
+  send?: boolean
   playerName: string
   playerAddr: string
 }
