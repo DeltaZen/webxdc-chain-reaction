@@ -33,7 +33,7 @@ class App extends Component<AppProps> {
     window.webxdc.setUpdateListener((update: ReceivedStatusUpdate<CRUpdate>) => {
       if (update.serial && update.max_serial && update.serial === update.max_serial) {
         try {
-          const { type, state } = update.payload
+          const { state } = update.payload
           // do stuff
           const currentActivePlayers = this.props.players.filter(player => player.address)
           const updatedActivePlayers = state.players.filter(player => player.address)
@@ -65,26 +65,31 @@ class App extends Component<AppProps> {
             <Ball color="#0099ff" clicksToBlow={3} className="large-ball" />
           </div>
         </header>
-        <div ref={x => this.settings = x} className="app-settings">
-          <div className="settings-wrapper">
-            <h2 className="no-margin">Settings</h2>
-            <GameSettings show={this.state.showSettings} />
+        {!this.props.gameStarted
+          ? <div ref={x => this.settings = x} className="app-settings">
+            <div className="settings-wrapper">
+              <h2 className="no-margin">Settings</h2>
+              <GameSettings show={true} />
+            </div>
+            <div onClick={this.toggleSettings} className="settings-toggle" />
           </div>
-          <div onClick={this.toggleSettings} className="settings-toggle" />
-        </div>
-        <p className="intro">
-          {this.props.gameEnded
-            ? <span className="victory">{`${currentPlayerName} won!`}</span>
-            : <span>{`${currentPlayerName} turn.`}</span>
-          }
-        </p>
-        <HistoryButtons />
-        <GameGrid />
-        <div className="footer">
-          <button onClick={this.props.reset}>
-            Reset game
-          </button>
-        </div>
+          : <>
+            <p className="intro">
+              {this.props.gameEnded
+                ? <span className="victory">{`${currentPlayerName} won!`}</span>
+                : <span>{`${currentPlayerName} turn.`}</span>
+              }
+            </p>
+            <HistoryButtons />
+            <GameGrid />
+            <div className="footer">
+              <button onClick={this.props.reset}>
+                Reset game
+              </button>
+            </div>
+          </>
+        }
+
       </div>
     )
   }
@@ -109,6 +114,7 @@ const mapStateToProps = (state) => {
     playerName: state.game.present.playerName,
     playerAddr: state.game.present.playerAddr,
     players: state.game.present.players,
+    gameStarted: state.game.present.gameStarted,
   }
 }
 
