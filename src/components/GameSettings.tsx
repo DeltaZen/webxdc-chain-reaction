@@ -96,6 +96,7 @@ class GameSettings extends React.Component<GameSettingsProps> {
   }
 
   render() {
+    const currentActivePlayers = this.state.players.filter(p => p.address)
     return (
       <div className={`settings ${this.props.show ? 'visible' : ''}`}>
         <div className="form">
@@ -135,7 +136,7 @@ class GameSettings extends React.Component<GameSettingsProps> {
           ))}
         </div>
         {this.state.players.length < 6 && <button onClick={this.addPlayer}>Add a player</button>}
-        <p>Changing the settings will reset the game.</p>
+        <p>{currentActivePlayers.length} of {this.state.players.length} players are ready!</p>
         <button onClick={this.changeSettings}>Create</button>
       </div>
     )
