@@ -13,6 +13,8 @@ import GameSettings from './components/GameSettings'
 import Ball from './components/Ball'
 // import HistoryButtons from './components/HistoryButtons'
 
+import PlayerList from './components/PlayerList'
+
 const playerAddr = window.webxdc.selfAddr
 
 class App extends Component<AppProps> {
@@ -79,6 +81,7 @@ class App extends Component<AppProps> {
   render() {
     const currentActivePlayers = this.props.players.filter(player => player.address)
     const currentPlayerName = this.props.players[this.props.currentPlayer].nick
+    const iAmIn = this.props.players.some(player => player.address === playerAddr)
     // console.log(this.props.players)
     return (
       <div className="app">
@@ -108,10 +111,14 @@ class App extends Component<AppProps> {
                 }
               </p>
               : <p className="intro">
-                {currentActivePlayers.length} of {this.props.players.length} players are ready
+                <span>{currentActivePlayers.length} of {this.props.players.length} players are ready</span><br />
+                <PlayerList players={this.props.players} />
+                {iAmIn
+                  && <span>Waiting for the other players to start</span>
+                }
               </p>}
             <p className="button-toolbar">
-              <button onClick={this.props.reset} disabled={currentActivePlayers.length === this.props.players.length}>
+              <button onClick={this.props.reset} disabled={currentActivePlayers.length === this.props.players.length || iAmIn}>
                 Join
               </button>
               <button onClick={this.props.reset} disabled={currentActivePlayers.length !== this.props.players.length}>

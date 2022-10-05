@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import isNaN from 'lodash/isNaN'
 import tinycolor from 'tinycolor2'
 import { initGame } from '../actions/game'
+import PlayerList from './PlayerList'
 import { modifyPlayer } from '~/reducers/game'
 import type { GameSettingsProps, GameSettingsState } from '~/interfaces'
 
@@ -122,18 +123,11 @@ class GameSettings extends React.Component<GameSettingsProps> {
               value={this.state.cols}
             />
           </div>
-          {this.state.players.map((player, index) => (
-            <div key={`player-${index}`} className="form-group">
-              <label htmlFor={`player-${index}`}>{player.nick ?? 'Unknown player'}</label>
-              <input
-                onChange={this.changePlayerColor(index)}
-                name={`player-${index}`}
-                type="color"
-                value={player.color}
-              />
-              {this.state.players.length > 2 && <button onClick={this.removePlayer(index)}>Remove</button>}
-            </div>
-          ))}
+          <PlayerList
+            players={this.state.players}
+            onChange={this.changePlayerColor}
+            removePlayer={this.removePlayer}
+          />
         </div>
         {this.state.players.length < 6 && <button onClick={this.addPlayer}>Add a player</button>}
         <p>{currentActivePlayers.length} of {this.state.players.length} players are ready!</p>
