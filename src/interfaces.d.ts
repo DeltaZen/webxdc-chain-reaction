@@ -6,6 +6,7 @@ export interface AppProps {
   playerName: string
   playerAddr: string
   reset: () => unknown
+  update: (state: UpdateState) => void
 }
 
 export interface AppState {
@@ -60,4 +61,21 @@ export interface GameSettingsState {
 export interface GameSettingsProps extends GameSettingsState {
   show: boolean
   initGame: (rows, cols, players) => unknown
+}
+
+export interface CRUpdate {
+  type: string
+  state: UpdateState
+}
+
+export interface UpdateState {
+  grid: any
+  currentPlayer: number
+  players: Player[]
+  rows: number
+  cols: number
+  turn: number
+  gameEnded: boolean
+  playerName: string
+  playerAddr: string
 }
