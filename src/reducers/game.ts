@@ -16,6 +16,7 @@ const INITIAL_STATE = {
   rows: 0,
   cols: 0,
   turn: 0,
+  gameStarted: false,
   gameEnded: false,
   playerName,
   playerAddr,
@@ -77,6 +78,7 @@ const game = (state = INITIAL_STATE, action) => {
             players,
             currentPlayer: 0,
             turn: 0,
+            gameStarted: false,
             gameEnded: false,
           },
         },
@@ -90,6 +92,7 @@ const game = (state = INITIAL_STATE, action) => {
         players,
         currentPlayer: 0,
         turn: 0,
+        gameStarted: false,
         gameEnded: false,
         playerName,
         playerAddr,
@@ -105,6 +108,7 @@ const game = (state = INITIAL_STATE, action) => {
         currentPlayer: 0,
         players,
         turn: 0,
+        gameStarted: false,
         gameEnded: false,
         playerName,
         playerAddr,
@@ -143,7 +147,7 @@ const game = (state = INITIAL_STATE, action) => {
       const { index, nick, address } = action.payload
       const { players } = state
 
-      if (!state.gameEnded) {
+      if (!state.gameStarted) {
         return {
           ...state,
           players: modifyPlayer(players, index, nick, address),
