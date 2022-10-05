@@ -38,6 +38,7 @@ export default class GameLogic {
     return {
       grid: this.grid,
       currentPlayer: this.currentPlayer,
+      gameStarted: true,
       gameEnded: this.hasGameEnded(),
       players: this.players,
       turn: this.turn,

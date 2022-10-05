@@ -56,20 +56,20 @@ const GameCell = ({
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     clickCell: () => {
-      // console.log(ownProps)
       dispatch(clickCell(ownProps.x, ownProps.y))
     },
   }
 }
 
 const mapStateToProps = (state, ownProps) => {
-  const { rows, cols, players, grid, currentPlayer, gameEnded, playerAddr } = state.game.present
+  const { rows, cols, players, grid, currentPlayer, gameEnded, playerAddr, gameStarted } = state.game.present
   const logic = new GameLogic(rows, cols, players, grid)
   return {
     status: grid[ownProps.x][ownProps.y],
     players,
     currentPlayer,
     clicksToBlow: logic.cellWillBlowIn(ownProps.x, ownProps.y),
+    gameStarted,
     gameEnded,
     playerAddr,
   }
