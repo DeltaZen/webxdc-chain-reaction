@@ -3,6 +3,7 @@ export interface AppProps {
   gameEnded: boolean
   gameStarted: boolean
   currentPlayer: number
+  turn: number
   players: Player[]
   playerName: string
   playerAddr: string

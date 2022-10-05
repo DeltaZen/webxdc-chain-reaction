@@ -59,8 +59,10 @@ class App extends Component<AppProps> {
             return
           }
           else if (itsMyGame && type !== UPDATE_ADMIN_STATE) {
+            // eslint-disable-next-line no-console
+            // console.log(updatedActivePlayers.length <= currentActivePlayers.length, updatedActivePlayers.length, currentActivePlayers.length, this.props.turn === state.turn, this.props.turn, state.turn)
             if (
-              updatedActivePlayers.length <= currentActivePlayers.length
+              (updatedActivePlayers.length <= currentActivePlayers.length && this.props.turn === state.turn && !state.gameEnded)
               || !state.gameStarted
             )
               return
@@ -68,8 +70,6 @@ class App extends Component<AppProps> {
             this.props.adminUpdate(state)
           }
           else {
-            // eslint-disable-next-line no-console
-            console.log('Applying\n', state)
             this.props.update(state)
           }
         }
@@ -168,6 +168,7 @@ const mapStateToProps = (state) => {
     playerAddr: state.game.present.playerAddr,
     players: state.game.present.players,
     gameStarted: state.game.present.gameStarted,
+    turn: state.game.present.turn,
   }
 }
 
