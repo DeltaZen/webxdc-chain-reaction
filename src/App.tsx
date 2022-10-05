@@ -5,13 +5,15 @@ import type { ReceivedStatusUpdate } from 'webxdc'
 import type { AppProps, AppState, CRUpdate, UpdateState } from './interfaces'
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { CLICK_CELL, INIT_GAME, MODIFY_PLAYER, UPDATE_FULL_STATE, resetGame, updateState } from './actions/game'
+import { CLICK_CELL, INIT_GAME, MODIFY_PLAYER, UPDATE_ADMIN_STATE, resetGame, updateAdminState, updateState } from './actions/game'
 
 import './App.css'
 import GameGrid from './components/GameGrid'
 import GameSettings from './components/GameSettings'
 import Ball from './components/Ball'
 import HistoryButtons from './components/HistoryButtons'
+
+const playerAddr = window.webxdc.selfAddr
 
 class App extends Component<AppProps> {
   settings: any = {} // FIXME
@@ -33,15 +35,38 @@ class App extends Component<AppProps> {
     window.webxdc.setUpdateListener((update: ReceivedStatusUpdate<CRUpdate>) => {
       if (update.serial && update.max_serial && update.serial === update.max_serial) {
         try {
-          const { state } = update.payload
+          const { type, state } = update.payload
           // do stuff
           const currentActivePlayers = this.props.players.filter(player => player.address)
           const updatedActivePlayers = state.players.filter(player => player.address)
 
-          if (updatedActivePlayers.length < currentActivePlayers.length)
-            return
+          const itsMyGame = updatedActivePlayers[0].address === currentActivePlayers[0]?.address
+            && playerAddr === updatedActivePlayers[0].address
 
-          this.props.update(state)
+          if (
+            type === INIT_GAME
+            && itsMyGame
+          ) {
+            this.props.adminUpdate({
+              ...state,
+              gameStarted: true,
+            })
+            return
+          }
+          else if (itsMyGame && type !== UPDATE_ADMIN_STATE) {
+            if (
+              updatedActivePlayers.length <= currentActivePlayers.length
+              || !state.gameStarted
+            )
+              return
+
+            this.props.adminUpdate(state)
+          }
+          else {
+            // eslint-disable-next-line no-console
+            console.log('Applying\n', state)
+            this.props.update(state)
+          }
         }
         catch (error) {
           // eslint-disable-next-line no-console
@@ -102,6 +127,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     update: (state: UpdateState) => {
       dispatch(updateState(state))
+    },
+    adminUpdate: (state: UpdateState) => {
+      dispatch(updateAdminState(state))
     },
   }
 }
