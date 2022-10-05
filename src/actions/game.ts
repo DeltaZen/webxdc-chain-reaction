@@ -1,7 +1,10 @@
+import type { UpdateState } from '~/interfaces'
+
 export const INIT_GAME = 'INIT_GAME'
 export const RESET_GAME = 'RESET_GAME'
 export const CLICK_CELL = 'CLICK_CELL'
 export const MODIFY_PLAYER = 'MODIFY_PLAYER'
+export const UPDATE_FULL_STATE = 'UPDATE_FULL_STATE'
 
 const ROWS = 6
 const COLS = 6
@@ -53,5 +56,12 @@ export const modifyPlayer = (index: number, nick: string, address: string) => {
       nick,
       address,
     },
+  }
+}
+
+export const updateState = (state: UpdateState) => {
+  return {
+    type: UPDATE_FULL_STATE,
+    payload: { ...state },
   }
 }
