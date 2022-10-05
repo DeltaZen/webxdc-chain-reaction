@@ -120,20 +120,15 @@ class App extends Component<AppProps> {
                   && <span>Waiting for the other players to start</span>
                 }
               </div>}
-            <p className="button-toolbar">
+            {this.props.turn < 1 && <p className="button-toolbar">
               <button onClick={this.joinGame} disabled={currentActivePlayers.length === this.props.players.length || iAmIn}>
                 Join
               </button>
-              <button onClick={this.props.reset} disabled={currentActivePlayers.length !== this.props.players.length}>
+              {/* <button onClick={this.props.reset} disabled={currentActivePlayers.length !== this.props.players.length}>
                 Start
-              </button>
-            </p>
+              </button> */}
+            </p>}
             <GameGrid />
-            <div className="footer">
-              <button onClick={this.props.reset}>
-                Reset game
-              </button>
-            </div>
           </>
         }
 
