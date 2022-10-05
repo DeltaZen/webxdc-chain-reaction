@@ -5,7 +5,7 @@ import type { ReceivedStatusUpdate } from 'webxdc'
 import type { AppProps, AppState, CRUpdate, UpdateState } from './interfaces'
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { CLICK_CELL, INIT_GAME, MODIFY_PLAYER, UPDATE_ADMIN_STATE, resetGame, updateAdminState, updateState } from './actions/game'
+import { INIT_GAME, UPDATE_ADMIN_STATE, modifyPlayer, resetGame, updateAdminState, updateState } from './actions/game'
 
 import './App.css'
 import GameGrid from './components/GameGrid'
@@ -16,6 +16,7 @@ import Ball from './components/Ball'
 import PlayerList from './components/PlayerList'
 
 const playerAddr = window.webxdc.selfAddr
+const playerName = window.webxdc.selfName
 
 class App extends Component<AppProps> {
   settings: any = {} // FIXME
@@ -32,6 +33,8 @@ class App extends Component<AppProps> {
         this.settings.scrollIntoView()
     })
   }
+
+  joinGame = () => this.props.modifyPlayer(playerName, playerAddr)
 
   componentDidMount(): void {
     window.webxdc.setUpdateListener((update: ReceivedStatusUpdate<CRUpdate>) => {
@@ -118,7 +121,7 @@ class App extends Component<AppProps> {
                 }
               </p>}
             <p className="button-toolbar">
-              <button onClick={this.props.reset} disabled={currentActivePlayers.length === this.props.players.length || iAmIn}>
+              <button onClick={this.joinGame} disabled={currentActivePlayers.length === this.props.players.length || iAmIn}>
                 Join
               </button>
               <button onClick={this.props.reset} disabled={currentActivePlayers.length !== this.props.players.length}>
@@ -149,6 +152,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     adminUpdate: (state: UpdateState) => {
       dispatch(updateAdminState(state))
+    },
+    modifyPlayer: (nick: string, address: string) => {
+      dispatch(modifyPlayer(nick, address))
     },
   }
 }
