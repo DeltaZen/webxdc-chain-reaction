@@ -11,7 +11,7 @@ import './App.css'
 import GameGrid from './components/GameGrid'
 import GameSettings from './components/GameSettings'
 import Ball from './components/Ball'
-import HistoryButtons from './components/HistoryButtons'
+// import HistoryButtons from './components/HistoryButtons'
 
 const playerAddr = window.webxdc.selfAddr
 
@@ -77,6 +77,7 @@ class App extends Component<AppProps> {
   }
 
   render() {
+    const currentActivePlayers = this.props.players.filter(player => player.address)
     const currentPlayerName = this.props.players[this.props.currentPlayer].nick
     // console.log(this.props.players)
     return (
@@ -99,13 +100,24 @@ class App extends Component<AppProps> {
             <div onClick={this.toggleSettings} className="settings-toggle" />
           </div>
           : <>
-            <p className="intro">
-              {this.props.gameEnded
-                ? <span className="victory">{`${currentPlayerName} won!`}</span>
-                : <span>{`${currentPlayerName} turn.`}</span>
-              }
+            {currentActivePlayers.length === this.props.players.length
+              ? <p className="intro">
+                {this.props.gameEnded
+                  ? <span className="victory">{`${currentPlayerName} won!`}</span>
+                  : <span>{`${currentPlayerName} turn.`}</span>
+                }
+              </p>
+              : <p className="intro">
+                {currentActivePlayers.length} of {this.props.players.length} players are ready
+              </p>}
+            <p className="button-toolbar">
+              <button onClick={this.props.reset} disabled={currentActivePlayers.length === this.props.players.length}>
+                Join
+              </button>
+              <button onClick={this.props.reset} disabled={currentActivePlayers.length !== this.props.players.length}>
+                Start
+              </button>
             </p>
-            <HistoryButtons />
             <GameGrid />
             <div className="footer">
               <button onClick={this.props.reset}>
