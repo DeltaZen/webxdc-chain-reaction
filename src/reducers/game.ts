@@ -65,6 +65,26 @@ const game = (state = INITIAL_STATE, action) => {
       const { rows, cols, players } = action.payload
       const grid = createEmptyGrid(rows, cols)
 
+      // send update as well
+      const text = `${players[0].nick} created a Chain Reaction game. Join!`
+      window.webxdc.sendUpdate({
+        payload: {
+          type: CLICK_CELL,
+          state: {
+            grid,
+            rows,
+            cols,
+            players,
+            currentPlayer: 0,
+            turn: 0,
+            gameEnded: false,
+            playerName,
+            playerAddr,
+          },
+        },
+        info: text,
+      }, text)
+
       return {
         grid,
         rows,
@@ -99,6 +119,19 @@ const game = (state = INITIAL_STATE, action) => {
       if (!state.gameEnded) {
         const logic = new GameLogic(rows, cols, players, grid)
         const newState = logic.playTurn(x, y, currentPlayer, turn)
+
+        // send update as well
+        const text = `It's ${newState.players[newState.currentPlayer].nick} turn`
+        window.webxdc.sendUpdate({
+          payload: {
+            type: CLICK_CELL,
+            state: {
+              ...state,
+              ...newState,
+            },
+          },
+          info: text,
+        }, text)
 
         return {
           ...state,
