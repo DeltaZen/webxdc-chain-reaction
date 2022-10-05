@@ -113,13 +113,13 @@ class App extends Component<AppProps> {
                   : <span>{`${currentPlayerName} turn.`}</span>
                 }
               </p>
-              : <p className="intro">
+              : <div className="intro">
                 <span>{currentActivePlayers.length} of {this.props.players.length} players are ready</span><br />
                 <PlayerList players={this.props.players} />
                 {iAmIn
                   && <span>Waiting for the other players to start</span>
                 }
-              </p>}
+              </div>}
             <p className="button-toolbar">
               <button onClick={this.joinGame} disabled={currentActivePlayers.length === this.props.players.length || iAmIn}>
                 Join
