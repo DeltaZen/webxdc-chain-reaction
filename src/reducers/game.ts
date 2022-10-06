@@ -1,5 +1,4 @@
 import range from 'lodash/range'
-import undoable from 'redux-undo'
 
 import { CLICK_CELL, INIT_GAME, MODIFY_PLAYER, RESET_GAME, UPDATE_ADMIN_STATE, UPDATE_FULL_STATE } from '../actions/game'
 import GameLogic from '../config/GameLogic'
@@ -203,7 +202,4 @@ const game = (state = INITIAL_STATE, action) => {
   }
 }
 
-export default undoable(game, {
-  limit: 1,
-  initTypes: ['@@redux-undo/INIT', INIT_GAME, RESET_GAME],
-})
+export default game

@@ -50,7 +50,7 @@ const GameGrid = (props: GameGridProps) => {
 // }
 
 const mapStateToProps = (state) => {
-  const { cols, rows, currentPlayer, players } = state.game.present
+  const { cols, rows, currentPlayer, players } = state.game
   return {
     cols,
     rows,

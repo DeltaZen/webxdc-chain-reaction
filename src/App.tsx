@@ -11,7 +11,6 @@ import './App.css'
 import GameGrid from './components/GameGrid'
 import GameSettings from './components/GameSettings'
 import Ball from './components/Ball'
-// import HistoryButtons from './components/HistoryButtons'
 
 import PlayerList from './components/PlayerList'
 
@@ -176,16 +175,16 @@ const mapDispatchToProps = (dispatch) => {
 const mapStateToProps = (state) => {
   // console.log(state.game.present)
   return {
-    currentPlayer: state.game.present.currentPlayer,
-    rows: state.game.present.rows,
-    cols: state.game.present.cols,
-    grid: state.game.present.grid,
-    gameEnded: state.game.present.gameEnded,
-    playerName: state.game.present.playerName,
-    playerAddr: state.game.present.playerAddr,
-    players: state.game.present.players,
-    gameStarted: state.game.present.gameStarted,
-    turn: state.game.present.turn,
+    currentPlayer: state.game.currentPlayer,
+    rows: state.game.rows,
+    cols: state.game.cols,
+    grid: state.game.grid,
+    gameEnded: state.game.gameEnded,
+    playerName: state.game.playerName,
+    playerAddr: state.game.playerAddr,
+    players: state.game.players,
+    gameStarted: state.game.gameStarted,
+    turn: state.game.turn,
   }
 }
 
