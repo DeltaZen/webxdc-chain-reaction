@@ -126,7 +126,7 @@ const game = (state = INITIAL_STATE, action) => {
         const newState = logic.playTurn(x, y, currentPlayer, turn)
 
         // send update as well
-        const text = `It's ${newState.players[newState.currentPlayer].nick} turn`
+        const text = newState.gameEnded ? `${newState.players[newState.currentPlayer].nick} won!` : `It's ${newState.players[newState.currentPlayer].nick} turn`
         window.webxdc.sendUpdate({
           payload: {
             type: CLICK_CELL,
