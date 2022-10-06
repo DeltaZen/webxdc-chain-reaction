@@ -14,7 +14,7 @@ const PlayerList = (props: { players: Player[]; onChange?: (index: number) => (e
                         value={player.color}
                     />
                   : <div className="logo">
-                        <Ball color={player.color} clicksToBlow={3} className="large-ball" />
+                        <Ball color={player.color} clicksToBlow={3} className={player.address ? 'large-ball shaking-more' : 'medium-ball'} />
                     </div>}
                 {' '}
                 <label htmlFor={`player-${index}`}>{player.nick ?? `Player-${index + 1}`}</label>
