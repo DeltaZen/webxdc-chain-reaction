@@ -1,5 +1,8 @@
 export interface AppProps {
   state?: AppState
+  grid: any
+  rows: number
+  cols: number
   gameEnded: boolean
   gameStarted: boolean
   currentPlayer: number
