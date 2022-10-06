@@ -13,7 +13,7 @@ const GameGrid = (props: GameGridProps) => {
   const style = {
     borderColor: 'grey',
     display: 'grid',
-    height: width > 0 ? `${width * props.cols / props.rows}px` : 'auto',
+    height: width > 0 ? `${width * props.rows / props.cols}px` : 'auto',
     // gridTemplateRows: `repeat(${props.rows}, 1fr)`,
     gridTemplateColumns: `repeat(${props.cols}, 1fr)`,
   }
