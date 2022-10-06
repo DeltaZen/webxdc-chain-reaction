@@ -3,10 +3,9 @@ import Ball from './Ball'
 import type { Player } from '~/interfaces'
 
 const PlayerList = (props: { players: Player[]; onChange?: (index: number) => (e: any) => void; removePlayer?: (index: number) => (e: any) => void }) => {
-  return <>
+  return <div className="playerlist">
         {props.players.map((player, index) => (
             <div key={`player-${index}`} className={props.onChange ? 'form-group' : 'player-row'}>
-                <label htmlFor={`player-${index}`}>{player.nick ?? `Player-${index + 1}`}</label>
                 {props.onChange
                   ? <input
                         onChange={props.onChange(index)}
@@ -17,10 +16,12 @@ const PlayerList = (props: { players: Player[]; onChange?: (index: number) => (e
                   : <div className="logo">
                         <Ball color={player.color} clicksToBlow={3} className="large-ball" />
                     </div>}
+                {' '}
+                <label htmlFor={`player-${index}`}>{player.nick ?? `Player-${index + 1}`}</label>
                 {(props.players.length > 2 && props.removePlayer) && <button onClick={props.removePlayer(index)}>Remove</button>}
             </div>
         ))}
-    </>
+    </div>
 }
 
 export default PlayerList

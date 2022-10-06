@@ -66,14 +66,25 @@
 
 .form {
   padding-top: 20px;
+  display: flex;
+  flex-direction: column;
 }
 
 .form-group {
   padding: 10px;
+
+  width: 100%;
+  
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin: auto;
 }
 
 .form-group label {
   margin-right: 15px;
+  margin-left: 15px;
 }
 
 .form-group button {
@@ -85,6 +96,10 @@
   flex-direction: row;
   justify-content: center;
   align-items: center;
+
+  gap: 2rem;
+
+  width: 100%;
 }
 
 input[type=number] {
@@ -174,6 +189,21 @@ input[type=color] {
   height: 70%;
   width: 70%;
   margin: 15% 15%;
+}
+
+.playerlist {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  max-width: -webkit-fit-content;
+  max-width: -moz-fit-content;
+  max-width: fit-content;
+  margin: auto;
+}
+
+.playerlist .form-group input, .playerlist .player-row .logo {
+  margin-right: auto;
 }
 
 /* @media screen and (min-width: 500px) {
