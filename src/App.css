@@ -106,14 +106,19 @@ input[type=number] {
   padding: 5px;
   font-size: 1em;
   font-weight: 400;
-  border: 1px solid grey;
-  border-radius: 3px;
+  border: 1px solid #222;
+  border-radius: 0.5rem;
+  
+  color: white;
+  background-color: #222
 }
 
 input[type=color] {
   padding: 0;
-  border: 1px solid grey;
-  border-radius: 3px;
+  border: 1px solid #222;
+  border-radius: 0.5rem;
+
+  background-color: #222;
 }
 
 .settings-toggle {
@@ -302,13 +307,18 @@ input[type=color] {
 
 button {
   border: 0;
-  border-radius: 3px;
+  border-radius: 0.5rem;
   color: white;
-  background-color: grey;
+  background-color: #222;
   padding: 8px 12px;
   font-size: 1em;
 
   cursor: pointer
+}
+
+.join-btn:not(:disabled) {
+  /* border: 1px solid white; */
+  background-color: #01050a;
 }
 
 button:disabled {

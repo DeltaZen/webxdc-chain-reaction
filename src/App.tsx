@@ -142,12 +142,14 @@ class App extends Component<AppProps> {
             <p className="button-toolbar">
               {currentActivePlayers.length !== this.props.players.length
                 && <button
+                  className="join-btn"
                   onClick={this.joinGame}
                   disabled={iAmIn}>
                   Join
                 </button>}
               {(iAmIn && this.props.turn > 0)
                 && <button
+                  className="join-btn"
                   onClick={this.resend}
                   disabled={currentActivePlayers.length !== this.props.players.length}>
                   Send again
