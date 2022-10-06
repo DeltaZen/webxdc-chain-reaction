@@ -97,6 +97,7 @@ class App extends Component<AppProps> {
     const currentActivePlayers = this.props.players.filter(player => player.address)
     const currentPlayerName = this.props.players[this.props.currentPlayer].nick
     const iAmIn = this.props.players.some(player => player.address === playerAddr)
+    const itIsYou = this.props.players[this.props.currentPlayer].address === playerAddr
     // console.log(this.props.players)
     return (
       <div className="app">
@@ -121,8 +122,8 @@ class App extends Component<AppProps> {
             {currentActivePlayers.length === this.props.players.length
               ? <p className="intro">
                 {this.props.gameEnded
-                  ? <span className="victory">{`${currentPlayerName} won!`}</span>
-                  : <span>{`${currentPlayerName} turn.`}</span>
+                  ? <span className="victory">{`${itIsYou ? 'You' : currentPlayerName} won!`}</span>
+                  : <span>{`${itIsYou ? 'Your' : currentPlayerName} turn.`}</span>
                 }
               </p>
               : <div className="intro">
