@@ -36,6 +36,19 @@ class App extends Component<AppProps> {
 
   joinGame = () => this.props.modifyPlayer(playerName, playerAddr)
 
+  resend = () => this.props.adminUpdate({
+    grid: this.props.grid,
+    currentPlayer: this.props.currentPlayer,
+    players: this.props.players,
+    rows: this.props.rows,
+    cols: this.props.cols,
+    turn: this.props.turn,
+    gameStarted: this.props.gameStarted,
+    gameEnded: this.props.gameEnded,
+    playerName,
+    playerAddr,
+  })
+
   componentDidMount(): void {
     window.webxdc.setUpdateListener((update: ReceivedStatusUpdate<CRUpdate>) => {
       if (update.serial && update.max_serial && update.serial === update.max_serial) {
@@ -120,14 +133,20 @@ class App extends Component<AppProps> {
                   && <span>Waiting for the other players to start</span>
                 }
               </div>}
-            {this.props.turn < 1 && <p className="button-toolbar">
-              <button onClick={this.joinGame} disabled={currentActivePlayers.length === this.props.players.length || iAmIn}>
-                Join
-              </button>
-              {/* <button onClick={this.props.reset} disabled={currentActivePlayers.length !== this.props.players.length}>
-                Start
-              </button> */}
-            </p>}
+            <p className="button-toolbar">
+              {currentActivePlayers.length !== this.props.players.length
+                && <button
+                  onClick={this.joinGame}
+                  disabled={iAmIn}>
+                  Join
+                </button>}
+              {(iAmIn && this.props.turn > 0)
+                && <button
+                  onClick={this.resend}
+                  disabled={currentActivePlayers.length !== this.props.players.length}>
+                  Send again
+                </button>}
+            </p>
             <GameGrid />
           </>
         }
@@ -158,6 +177,9 @@ const mapStateToProps = (state) => {
   // console.log(state.game.present)
   return {
     currentPlayer: state.game.present.currentPlayer,
+    rows: state.game.present.rows,
+    cols: state.game.present.cols,
+    grid: state.game.present.grid,
     gameEnded: state.game.present.gameEnded,
     playerName: state.game.present.playerName,
     playerAddr: state.game.present.playerAddr,
