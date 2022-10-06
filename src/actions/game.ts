@@ -7,18 +7,18 @@ export const MODIFY_PLAYER = 'MODIFY_PLAYER'
 export const UPDATE_FULL_STATE = 'UPDATE_FULL_STATE'
 export const UPDATE_ADMIN_STATE = 'UPDATE_ADMIN_STATE'
 
-const ROWS = 6
+const ROWS = 9
 const COLS = 6
 const PLAYERS = [
   {
     color: '#FF0000',
     alive: true,
-    nick: 'Player 1',
+    nick: 'Available',
   },
   {
     color: '#1EF127',
     alive: true,
-    nick: 'Player 2',
+    nick: 'Available',
   },
 ]
 

@@ -18,11 +18,11 @@ const playerAddr = window.webxdc.selfAddr
 const playerName = window.webxdc.selfName
 
 class App extends Component<AppProps> {
-  settings: any = {} // FIXME
+  settings: any = {}
   state: AppState
   constructor(props) {
     super(props)
-    this.state = { showSettings: false }
+    this.state = { showSettings: true }
   }
 
   toggleSettings = () => {

@@ -49,7 +49,7 @@ class GameSettings extends React.Component<GameSettingsProps> {
     players.push({
       alive: true,
       color: tinycolor.random().toHexString(),
-      nick: 'Unknown name',
+      nick: 'Available',
     })
     this.setState({
       players,
