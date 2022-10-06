@@ -96,6 +96,7 @@ class App extends Component<AppProps> {
   render() {
     const currentActivePlayers = this.props.players.filter(player => player.address)
     const currentPlayerName = this.props.players[this.props.currentPlayer].nick
+    const currentPlayerColor = this.props.players[this.props.currentPlayer].color
     const iAmIn = this.props.players.some(player => player.address === playerAddr)
     const itIsYou = this.props.players[this.props.currentPlayer].address === playerAddr
     // console.log(this.props.players)
@@ -120,12 +121,17 @@ class App extends Component<AppProps> {
           </div>
           : <>
             {currentActivePlayers.length === this.props.players.length
-              ? <p className="intro">
-                {this.props.gameEnded
-                  ? <span className="victory">{`${itIsYou ? 'You' : currentPlayerName} won!`}</span>
-                  : <span>{`${itIsYou ? 'Your' : currentPlayerName} turn.`}</span>
-                }
-              </p>
+              ? <div className="intro">
+                <div className="player-row">
+                  <div className="logo">
+                    <Ball color={currentPlayerColor} clicksToBlow={3} className="large-ball" />
+                  </div>
+                  {this.props.gameEnded
+                    ? <span className="victory">{`${itIsYou ? 'You' : currentPlayerName} won!`}</span>
+                    : <span>{`${itIsYou ? 'Your' : currentPlayerName} turn.`}</span>
+                  }
+                </div>
+              </div>
               : <div className="intro">
                 <span>{currentActivePlayers.length} of {this.props.players.length} players are ready</span><br />
                 <PlayerList players={this.props.players} />
