@@ -5,7 +5,7 @@ import type { ReceivedStatusUpdate } from 'webxdc'
 import type { AppProps, AppState, CRUpdate, UpdateState } from './interfaces'
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { INIT_GAME, UPDATE_ADMIN_STATE, modifyPlayer, resetGame, updateAdminState, updateState } from './actions/game'
+import { INIT_GAME, MODIFY_PLAYER, UPDATE_ADMIN_STATE, modifyPlayer, resetGame, updateAdminState, updateState } from './actions/game'
 
 import './App.css'
 import GameGrid from './components/GameGrid'
@@ -50,7 +50,14 @@ class App extends Component<AppProps> {
 
   componentDidMount(): void {
     window.webxdc.setUpdateListener((update: ReceivedStatusUpdate<CRUpdate>) => {
-      if (update.serial && update.max_serial && update.serial === update.max_serial) {
+      const lastSerial = parseInt(localStorage.getItem('last-serial') ?? '0')
+      if (
+        update.serial
+        && update.max_serial
+        && update.serial === update.max_serial
+        && update.serial > lastSerial
+      ) {
+        localStorage.setItem('last-serial', `${update.serial}`)
         try {
           const { type, state } = update.payload
           // do stuff
@@ -71,8 +78,6 @@ class App extends Component<AppProps> {
             return
           }
           else if (itsMyGame && type !== UPDATE_ADMIN_STATE) {
-            // eslint-disable-next-line no-console
-            // console.log(updatedActivePlayers.length <= currentActivePlayers.length, updatedActivePlayers.length, currentActivePlayers.length, this.props.turn === state.turn, this.props.turn, state.turn)
             if (
               (updatedActivePlayers.length <= currentActivePlayers.length && this.props.turn === state.turn && !state.gameEnded)
               || !state.gameStarted
@@ -82,6 +87,20 @@ class App extends Component<AppProps> {
             this.props.adminUpdate(state)
           }
           else {
+            if (
+              type !== MODIFY_PLAYER
+              && !state.gameEnded
+              && updatedActivePlayers.length > 1
+              && (
+                this.props.turn > state.turn
+                || (
+                  this.props.turn === state.turn
+                  && this.props.currentPlayer >= state.currentPlayer
+                )
+              )
+            )
+              return
+
             this.props.update(state)
           }
         }
@@ -99,7 +118,6 @@ class App extends Component<AppProps> {
     const currentPlayerColor = this.props.players[this.props.currentPlayer].color
     const iAmIn = this.props.players.some(player => player.address === playerAddr)
     const itIsYou = this.props.players[this.props.currentPlayer].address === playerAddr
-    // console.log(this.props.players)
     return (
       <div className="app">
         <header className="header">
