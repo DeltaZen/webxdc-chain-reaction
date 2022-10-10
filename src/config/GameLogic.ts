@@ -69,6 +69,8 @@ export default class GameLogic {
     if (cell.player > -1 && cell.player !== this.currentPlayer)
       return
 
+    navigator.vibrate(100)
+
     this.turnPlayed = true
     this.activateCell(this.x, this.y)
 
