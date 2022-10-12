@@ -135,7 +135,6 @@ class App extends Component<AppProps> {
               <h2 className="no-margin">Settings</h2>
               <GameSettings show={true} />
             </div>
-            <div onClick={this.toggleSettings} className="settings-toggle" />
           </div>
           : <>
             {currentActivePlayers.length === this.props.players.length
