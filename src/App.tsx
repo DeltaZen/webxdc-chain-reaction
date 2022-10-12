@@ -164,7 +164,7 @@ class App extends Component<AppProps> {
                   disabled={iAmIn}>
                   Join
                 </button>}
-              {(iAmIn && this.props.turn > 0)
+              {(iAmIn && (this.props.turn > 0 || this.props.currentPlayer > 0))
                 && <button
                   className="join-btn"
                   onClick={this.resend}
