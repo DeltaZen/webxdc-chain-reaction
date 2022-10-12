@@ -18,6 +18,8 @@ const GameCell = ({
   clicksToBlow,
   gameEnded,
   playerAddr,
+  rows,
+  cols,
 }: GameCellProps) => {
   const cellStyle = {
     borderColor: 'grey',
@@ -26,6 +28,9 @@ const GameCell = ({
     cellStyle.borderColor = players[currentPlayer].color
 
   const isFull = players.filter(p => p.address).length === players.length
+
+  const isCorner = (x === 0 || x === rows - 1) && (y === 0 || y === cols - 1)
+  const isSide = x === 0 || x === rows - 1 || y === 0 || y === cols - 1
 
   // console.log(players[currentPlayer].address)
   const onCellClick = gameEnded || !isFull || (status.player !== -1 && status.player !== currentPlayer)
@@ -38,6 +43,8 @@ const GameCell = ({
         ? <Ball
           color={players[status.player].color}
           clicksToBlow={clicksToBlow}
+          isCorner={isCorner}
+          isSide={isSide}
         />
         : null
       }
@@ -74,6 +81,8 @@ const mapStateToProps = (state, ownProps) => {
     gameStarted,
     gameEnded,
     playerAddr,
+    rows,
+    cols,
   }
 }
 

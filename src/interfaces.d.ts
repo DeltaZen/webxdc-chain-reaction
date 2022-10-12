@@ -38,6 +38,8 @@ export interface GameCellProps {
   gameStarted: boolean
   gameEnded: boolean
   playerAddr: string
+  rows: number
+  cols: number
 }
 
 export interface GameGridProps {

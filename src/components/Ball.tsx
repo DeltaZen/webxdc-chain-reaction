@@ -2,7 +2,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 
-const Ball = ({ color, clicksToBlow, className }) => {
+const Ball = ({ color, clicksToBlow, className, isCorner = false, isSide = false }) => {
   const ballStyle = {
     'background': `radial-gradient(circle at 30% 30%, ${color}, black)`,
     '--color': color,
@@ -11,10 +11,10 @@ const Ball = ({ color, clicksToBlow, className }) => {
   let classes = 'ball'
   if (!className) {
     if (clicksToBlow === 1)
-      classes += ' shaking-more third-ball'
+      classes += isCorner ? ' shaking-more' : isSide ? ' shaking-more second-ball' : ' shaking-more third-ball'
 
     else if (clicksToBlow === 2)
-      classes += ' shaking second-ball'
+      classes += isSide ? ' shaking' : ' shaking second-ball'
   }
   else {
     classes += ` ${className}`
@@ -32,6 +32,8 @@ Ball.propTypes = {
   color: PropTypes.string,
   clicksToBlow: PropTypes.number,
   className: PropTypes.string,
+  isCorner: PropTypes.bool,
+  isSide: PropTypes.bool,
 }
 
 export default Ball
