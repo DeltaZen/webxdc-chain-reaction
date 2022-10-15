@@ -115,6 +115,8 @@ export default class GameLogic {
   }
 
   blowCell = (x, y) => {
+    navigator.vibrate(200)
+    // console.log('Activated cells: ', this.cellsActivated)
     this.cellsActivated++
 
     // blow current cell
@@ -124,9 +126,9 @@ export default class GameLogic {
     }
 
     // do it again for next cells
-    this.getAdjacentCellsCoordinates(x, y).forEach((cellCoordinates) => {
-      this.activateCell(cellCoordinates.x, cellCoordinates.y)
-    })
+    this.getAdjacentCellsCoordinates(x, y).forEach(cellCoordinates =>
+      this.activateCell(cellCoordinates.x, cellCoordinates.y),
+    )
   }
 
   cellWillBlowIn = (x, y) => {
