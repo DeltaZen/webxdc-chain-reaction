@@ -38,7 +38,7 @@ const GameCell = ({
     : players[currentPlayer].address === playerAddr ? clickCell : null
 
   return (
-    <div className={`game-cell ${x}-${y}`} onClick={onCellClick} style={cellStyle}>
+    <div className={`game-cell cell-${x}-${y}`} onClick={onCellClick} style={cellStyle}>
       {status.player !== -1
         ? <Ball
           color={players[status.player].color}
