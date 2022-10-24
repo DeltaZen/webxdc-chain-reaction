@@ -275,6 +275,31 @@ input[type=color] {
           animation-timing-function: linear;
 }
 
+.move {
+  position: absolute;
+  top: 25%;
+  left: 25%;
+  height: 50%;
+  width: 50%;
+  border-radius: 50%;
+}
+
+.up {
+  animation: moveup 0.5s linear;
+}
+
+.down {
+  animation: movedown 0.5s linear;
+}
+
+.left {
+  animation: moveleft 0.5s linear;
+}
+
+.right {
+  animation: moveright 0.5s linear;
+}
+
 @-webkit-keyframes shake {
   0% { transform: translate(2px, 1px) rotate(0deg); }
 	10% { transform: translate(-1px, -2px) rotate(-1deg); }
@@ -329,6 +354,29 @@ input[type=color] {
 	80% { transform: translate(-2px, -2px) rotate(1deg); }
 	90% { transform: translate(4px, 4px) rotate(0deg); }
 	100% { transform: translate(2px, -4px) rotate(-1deg); }
+}
+
+@keyframes moveup {
+  0% { transform: translate(0, 0) rotate(0deg); }
+  0% { transform: translate(0, 10%) rotate(0deg); }
+  100% { transform: translate(0, -200%) rotate(0deg); }
+}
+
+@keyframes movedown {
+  0% { transform: translate(0, 0) rotate(0deg); }
+  0% { transform: translate(0, -10%) rotate(0deg); }
+  100% { transform: translate(0, 200%) rotate(0deg); }
+}
+@keyframes moveleft {
+  0% { transform: translate(0, 0) rotate(0deg); }
+  0% { transform: translate(10%, 0) rotate(0deg); }
+  100% { transform: translate(-200%, 0) rotate(0deg); }
+}
+
+@keyframes moveright {
+  0% { transform: translate(0, 0) rotate(0deg); }
+  0% { transform: translate(-10%, 0) rotate(0deg); }
+  100% { transform: translate(200%, 0) rotate(0deg); }
 }
 
 .footer {

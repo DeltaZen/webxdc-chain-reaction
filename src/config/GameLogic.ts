@@ -3,6 +3,9 @@ import keys from 'lodash/keys'
 
 import type { Player } from '~/interfaces'
 
+// function sleep(delay: number) {
+//   return new Promise(resolve => setTimeout(resolve, delay))
+// }
 export default class GameLogic {
   rows: number
   cols: number
@@ -125,10 +128,48 @@ export default class GameLogic {
       clicked: 0,
     }
 
+    // add animation TODO:
+    this.addAnimation(x, y)
+
     // do it again for next cells
-    this.getAdjacentCellsCoordinates(x, y).forEach(cellCoordinates =>
-      this.activateCell(cellCoordinates.x, cellCoordinates.y),
-    )
+    this.getAdjacentCellsCoordinates(x, y).forEach((cellCoordinates) => {
+      this.activateCell(cellCoordinates.x, cellCoordinates.y)
+    })
+  }
+
+  addAnimation = (x: number, y: number) => {
+    const gameCell = document.querySelector(`.cell-${x}-${y}`)
+    const color = this.players[this.currentPlayer].color
+    if (gameCell) {
+      if (x > 0) {
+        const moveup = document.createElement('div')
+        moveup.classList.add('move', 'up')
+        moveup.style.background = `radial-gradient(circle at 30% 30%, ${color}, black)`
+        gameCell.appendChild(moveup)
+        setTimeout(() => gameCell.removeChild(moveup), 500)
+      }
+      if (x < this.rows - 1) {
+        const movedown = document.createElement('div')
+        movedown.classList.add('move', 'down')
+        movedown.style.background = `radial-gradient(circle at 30% 30%, ${color}, black)`
+        gameCell.appendChild(movedown)
+        setTimeout(() => gameCell.removeChild(movedown), 500)
+      }
+      if (y < this.cols - 1) {
+        const moveright = document.createElement('div')
+        moveright.classList.add('move', 'right')
+        moveright.style.background = `radial-gradient(circle at 30% 30%, ${color}, black)`
+        gameCell.appendChild(moveright)
+        setTimeout(() => gameCell.removeChild(moveright), 500)
+      }
+      if (y > 0) {
+        const moveleft = document.createElement('div')
+        moveleft.classList.add('move', 'left')
+        moveleft.style.background = `radial-gradient(circle at 30% 30%, ${color}, black)`
+        gameCell.appendChild(moveleft)
+        setTimeout(() => gameCell.removeChild(moveleft), 500)
+      }
+    }
   }
 
   cellWillBlowIn = (x, y) => {
