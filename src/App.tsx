@@ -79,7 +79,7 @@ class App extends Component<AppProps> {
           }
           else if (itsMyGame && type !== UPDATE_ADMIN_STATE) {
             if (
-              (updatedActivePlayers.length <= currentActivePlayers.length && this.props.turn === state.turn && !state.gameEnded)
+              (updatedActivePlayers.length <= currentActivePlayers.length && this.props.turn === state.turn && !state.gameEnded && !state.click)
               || !state.gameStarted
             )
               return
@@ -96,6 +96,7 @@ class App extends Component<AppProps> {
                 || (
                   this.props.turn === state.turn
                   && this.props.currentPlayer >= state.currentPlayer
+                  && !state.click
                 )
               )
             )
@@ -124,7 +125,7 @@ class App extends Component<AppProps> {
           <div className="logo">
             <Ball color="#0099ff" clicksToBlow={3} className="large-ball" />
           </div>
-          <h1 className="title">Chain Reaction</h1>
+          <h1 className="title">Chain Reaction {this.props.cols} cols x {this.props.rows} rows</h1>
           <div className="logo">
             <Ball color="#0099ff" clicksToBlow={3} className="large-ball" />
           </div>
