@@ -3,9 +3,15 @@ import keys from 'lodash/keys'
 
 import type { Player } from '~/interfaces'
 
-// function sleep(delay: number) {
-//   return new Promise(resolve => setTimeout(resolve, delay))
-// }
+function vibrate(ms = 100) {
+  try {
+    navigator.vibrate(ms)
+  }
+  catch (error) {
+    // eslint-disable-next-line no-console
+    console.log(error)
+  }
+}
 export default class GameLogic {
   rows: number
   cols: number
@@ -72,7 +78,7 @@ export default class GameLogic {
     if (cell.player > -1 && cell.player !== this.currentPlayer)
       return
 
-    navigator.vibrate(100)
+    vibrate(100)
 
     this.turnPlayed = true
     this.activateCell(this.x, this.y)
@@ -118,7 +124,7 @@ export default class GameLogic {
   }
 
   blowCell = (x, y) => {
-    navigator.vibrate(200)
+    vibrate(200)
     // console.log('Activated cells: ', this.cellsActivated)
     this.cellsActivated++
 
