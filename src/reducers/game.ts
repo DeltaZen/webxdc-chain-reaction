@@ -132,7 +132,11 @@ const game = (state = INITIAL_STATE, action) => {
             type: CLICK_CELL,
             state: {
               ...state,
-              ...newState,
+              // ...newState,
+              click: {
+                x,
+                y,
+              },
             },
           },
           info: text,
@@ -175,15 +179,21 @@ const game = (state = INITIAL_STATE, action) => {
     case UPDATE_FULL_STATE: {
       const state = action.payload
 
+      let newState = state
+      if (state.click) {
+        const logic = new GameLogic(state.rows, state.cols, state.players, state.grid)
+        newState = logic.playTurn(state.click.x, state.click.y, state.currentPlayer, state.turn)
+      }
+
       return {
-        ...state, playerName, playerAddr,
+        ...state, ...newState, playerName, playerAddr,
       }
     }
     case UPDATE_ADMIN_STATE: {
       const state = action.payload
 
       // send update as well
-      const text = '[update approved by admin]'
+      const text = state.click ? '[update with new move]' : '[update approved by admin]'
       state.gameStarted && window.webxdc.sendUpdate({
         payload: {
           type: UPDATE_ADMIN_STATE,
