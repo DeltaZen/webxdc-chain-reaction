@@ -165,15 +165,17 @@ class App extends Component<AppProps> {
                   disabled={iAmIn}>
                   Join
                 </button>}
-              {(iAmIn && (this.props.turn > 0 || this.props.currentPlayer > 0))
-                && <button
+            </p>
+            <GameGrid />
+            {(iAmIn && (this.props.turn > 0 || this.props.currentPlayer > 0))
+              && <p className="button-toolbar">
+                <button
                   className="join-btn"
                   onClick={this.resend}
                   disabled={currentActivePlayers.length !== this.props.players.length}>
                   Send again
-                </button>}
-            </p>
-            <GameGrid />
+                </button>
+              </p>}
           </>
         }
 
