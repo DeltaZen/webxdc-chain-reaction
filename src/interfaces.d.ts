@@ -90,4 +90,8 @@ export interface UpdateState {
   send?: boolean
   playerName: string
   playerAddr: string
+  click?: {
+    x: number
+    y: number
+  }
 }
