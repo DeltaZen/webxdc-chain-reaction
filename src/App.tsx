@@ -125,7 +125,7 @@ class App extends Component<AppProps> {
           <div className="logo">
             <Ball color="#0099ff" clicksToBlow={3} className="large-ball" />
           </div>
-          <h1 className="title">Chain Reaction {this.props.cols} cols x {this.props.rows} rows</h1>
+          <h1 className="title">Chain Reaction</h1>
           <div className="logo">
             <Ball color="#0099ff" clicksToBlow={3} className="large-ball" />
           </div>
