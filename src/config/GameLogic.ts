@@ -149,31 +149,59 @@ export default class GameLogic {
     if (gameCell) {
       if (x > 0) {
         const moveup = document.createElement('div')
+        const upCell = document.querySelector(`.cell-${x - 1}-${y}`)
+        if (upCell && upCell.firstElementChild)
+          upCell.firstElementChild.classList.add('hide')
         moveup.classList.add('move', 'up')
         moveup.style.background = `radial-gradient(circle at 30% 30%, ${color}, black)`
         gameCell.appendChild(moveup)
-        setTimeout(() => gameCell.removeChild(moveup), 500)
+        setTimeout(() => {
+          gameCell.removeChild(moveup)
+          if (upCell && upCell.firstElementChild)
+            upCell.firstElementChild.classList.remove('hide')
+        }, 500)
       }
       if (x < this.rows - 1) {
         const movedown = document.createElement('div')
+        const downCell = document.querySelector(`.cell-${x + 1}-${y}`)
+        if (downCell && downCell.firstElementChild)
+          downCell.firstElementChild.classList.add('hide')
         movedown.classList.add('move', 'down')
         movedown.style.background = `radial-gradient(circle at 30% 30%, ${color}, black)`
         gameCell.appendChild(movedown)
-        setTimeout(() => gameCell.removeChild(movedown), 500)
+        setTimeout(() => {
+          gameCell.removeChild(movedown)
+          if (downCell && downCell.firstElementChild)
+            downCell.firstElementChild.classList.remove('hide')
+        }, 500)
       }
       if (y < this.cols - 1) {
         const moveright = document.createElement('div')
+        const rightCell = document.querySelector(`.cell-${x}-${y + 1}`)
+        if (rightCell && rightCell.firstElementChild)
+          rightCell.firstElementChild.classList.add('hide')
         moveright.classList.add('move', 'right')
         moveright.style.background = `radial-gradient(circle at 30% 30%, ${color}, black)`
         gameCell.appendChild(moveright)
-        setTimeout(() => gameCell.removeChild(moveright), 500)
+        setTimeout(() => {
+          gameCell.removeChild(moveright)
+          if (rightCell && rightCell.firstElementChild)
+            rightCell.firstElementChild.classList.remove('hide')
+        }, 500)
       }
       if (y > 0) {
         const moveleft = document.createElement('div')
+        const leftCell = document.querySelector(`.cell-${x}-${y - 1}`)
+        if (leftCell && leftCell.firstElementChild)
+          leftCell.firstElementChild.classList.add('hide')
         moveleft.classList.add('move', 'left')
         moveleft.style.background = `radial-gradient(circle at 30% 30%, ${color}, black)`
         gameCell.appendChild(moveleft)
-        setTimeout(() => gameCell.removeChild(moveleft), 500)
+        setTimeout(() => {
+          gameCell.removeChild(moveleft)
+          if (leftCell && leftCell.firstElementChild)
+            leftCell.firstElementChild.classList.remove('hide')
+        }, 500)
       }
     }
   }

@@ -285,19 +285,23 @@ input[type=color] {
 }
 
 .up {
-  animation: moveup 0.5s linear;
+  -webkit-animation: moveup 0.5s linear;
+          animation: moveup 0.5s linear;
 }
 
 .down {
-  animation: movedown 0.5s linear;
+  -webkit-animation: movedown 0.5s linear;
+          animation: movedown 0.5s linear;
 }
 
 .left {
-  animation: moveleft 0.5s linear;
+  -webkit-animation: moveleft 0.5s linear;
+          animation: moveleft 0.5s linear;
 }
 
 .right {
-  animation: moveright 0.5s linear;
+  -webkit-animation: moveright 0.5s linear;
+          animation: moveright 0.5s linear;
 }
 
 @-webkit-keyframes shake {
@@ -356,10 +360,22 @@ input[type=color] {
 	100% { transform: translate(2px, -4px) rotate(-1deg); }
 }
 
+@-webkit-keyframes moveup {
+  0% { transform: translate(0, 0) rotate(0deg); }
+  0% { transform: translate(0, 10%) rotate(0deg); }
+  100% { transform: translate(0, -200%) rotate(0deg); }
+}
+
 @keyframes moveup {
   0% { transform: translate(0, 0) rotate(0deg); }
   0% { transform: translate(0, 10%) rotate(0deg); }
   100% { transform: translate(0, -200%) rotate(0deg); }
+}
+
+@-webkit-keyframes movedown {
+  0% { transform: translate(0, 0) rotate(0deg); }
+  0% { transform: translate(0, -10%) rotate(0deg); }
+  100% { transform: translate(0, 200%) rotate(0deg); }
 }
 
 @keyframes movedown {
@@ -367,10 +383,21 @@ input[type=color] {
   0% { transform: translate(0, -10%) rotate(0deg); }
   100% { transform: translate(0, 200%) rotate(0deg); }
 }
+@-webkit-keyframes moveleft {
+  0% { transform: translate(0, 0) rotate(0deg); }
+  0% { transform: translate(10%, 0) rotate(0deg); }
+  100% { transform: translate(-200%, 0) rotate(0deg); }
+}
 @keyframes moveleft {
   0% { transform: translate(0, 0) rotate(0deg); }
   0% { transform: translate(10%, 0) rotate(0deg); }
   100% { transform: translate(-200%, 0) rotate(0deg); }
+}
+
+@-webkit-keyframes moveright {
+  0% { transform: translate(0, 0) rotate(0deg); }
+  0% { transform: translate(-10%, 0) rotate(0deg); }
+  100% { transform: translate(200%, 0) rotate(0deg); }
 }
 
 @keyframes moveright {
@@ -407,4 +434,8 @@ button:disabled {
   background-color: rgba(88, 88, 88, 0.452);
   color:#222;
   cursor: not-allowed;
+}
+
+.hide {
+  display: none;
 }
