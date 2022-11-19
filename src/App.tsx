@@ -48,7 +48,7 @@ class App extends Component<AppProps> {
     playerAddr,
   })
 
-  componentDidMount(): void {
+  async componentDidMount() {
     window.webxdc.setUpdateListener((update: ReceivedStatusUpdate<CRUpdate>) => {
       const lastSerial = parseInt(localStorage.getItem('last-serial') ?? '0')
       if (
