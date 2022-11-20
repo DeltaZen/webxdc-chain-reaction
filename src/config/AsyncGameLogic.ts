@@ -13,7 +13,7 @@ function vibrate(ms = 100) {
   }
 }
 
-// function sleep(ms) {
+// function sleep(ms: number) {
 //   return new Promise(resolve => setTimeout(resolve, ms))
 // }
 
@@ -117,7 +117,7 @@ export default class GameLogic {
     }
 
     // Else we blow it
-    this.blowCell(x, y)
+    await this.blowCell(x, y)
   }
 
   increaseCellClicks = (x, y) => {
@@ -128,7 +128,7 @@ export default class GameLogic {
     }
   }
 
-  blowCell = (x, y) => {
+  blowCell = async (x, y) => {
     vibrate(200)
     // console.log('Activated cells: ', this.cellsActivated)
     this.cellsActivated++
@@ -143,13 +143,13 @@ export default class GameLogic {
     this.addAnimation(x, y)
 
     // do it again for next cells
-    this.getAdjacentCellsCoordinates(x, y).forEach(async (cellCoordinates) => {
+    this.getAdjacentCellsCoordinates(x, y).forEach((cellCoordinates) => {
       // await sleep(200)
-      await this.activateCell(cellCoordinates.x, cellCoordinates.y)
+      this.activateCell(cellCoordinates.x, cellCoordinates.y)
     })
   }
 
-  addAnimation = async (x: number, y: number) => {
+  addAnimation = (x: number, y: number) => {
     const gameCell = document.querySelector(`.cell-${x}-${y}`)
     const color = this.players[this.currentPlayer].color
     if (gameCell) {
@@ -209,8 +209,6 @@ export default class GameLogic {
             leftCell.firstElementChild.classList.remove('hide')
         }, 500)
       }
-
-      // await sleep(500)
     }
   }
 
