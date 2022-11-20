@@ -1,6 +1,6 @@
 import range from 'lodash/range'
 
-import { CLICK_CELL, INIT_GAME, MODIFY_PLAYER, RESET_GAME, UPDATE_ADMIN_STATE, UPDATE_FULL_STATE } from '../actions/game'
+import { CLICK_CELL, INIT_GAME, MODIFY_PLAYER, RESET_GAME, UPDATE_ADMIN_STATE, UPDATE_FULL_STATE_FAILED, UPDATE_FULL_STATE_SUCCEEDED } from '../actions/game'
 import GameLogic from '../config/GameLogic'
 
 import type { Player } from '../interfaces'
@@ -176,17 +176,31 @@ const game = (state = INITIAL_STATE, action) => {
 
       return state
     }
-    case UPDATE_FULL_STATE: {
+    // case UPDATE_FULL_STATE: {
+    //   const state = action.payload
+
+    //   let newState = state
+    //   if (state.click) {
+    //     const logic = new GameLogic(state.rows, state.cols, state.players, state.grid)
+    //     newState = logic.playTurn(state.click.x, state.click.y, state.currentPlayer, state.turn)
+    //   }
+
+    //   return {
+    //     ...state, ...newState, playerName, playerAddr,
+    //   }
+    // }
+    case UPDATE_FULL_STATE_SUCCEEDED: {
       const state = action.payload
 
-      let newState = state
-      if (state.click) {
-        const logic = new GameLogic(state.rows, state.cols, state.players, state.grid)
-        newState = logic.playTurn(state.click.x, state.click.y, state.currentPlayer, state.turn)
+      return {
+        ...state, playerName, playerAddr,
       }
+    }
+    case UPDATE_FULL_STATE_FAILED: {
+      const state = action.payload
 
       return {
-        ...state, ...newState, playerName, playerAddr,
+        ...state, playerName, playerAddr,
       }
     }
     case UPDATE_ADMIN_STATE: {
