@@ -13,9 +13,9 @@ function vibrate(ms = 100) {
   }
 }
 
-// function sleep(ms: number) {
-//   return new Promise(resolve => setTimeout(resolve, ms))
-// }
+function sleep(ms: number) {
+  return new Promise(resolve => setTimeout(resolve, ms))
+}
 
 export default class GameLogic {
   rows: number
@@ -141,12 +141,13 @@ export default class GameLogic {
 
     // add animation
     this.addAnimation(x, y)
+    await sleep(500)
 
-    // do it again for next cells
-    this.getAdjacentCellsCoordinates(x, y).forEach((cellCoordinates) => {
-      // await sleep(200)
-      this.activateCell(cellCoordinates.x, cellCoordinates.y)
-    })
+    const adjacentCells = this.getAdjacentCellsCoordinates(x, y)
+    for (let i = 0; i < adjacentCells.length; i++) {
+      const cell = adjacentCells[i]
+      await this.activateCell(cell.x, cell.y)
+    }
   }
 
   addAnimation = (x: number, y: number) => {
@@ -158,8 +159,9 @@ export default class GameLogic {
         const upCell = document.querySelector(`.cell-${x - 1}-${y}`)
         if (upCell && upCell.firstElementChild)
           upCell.firstElementChild.classList.add('hide')
-        moveup.classList.add('move', 'up')
+
         moveup.style.background = `radial-gradient(circle at 30% 30%, ${color}, black)`
+        moveup.classList.add('move', 'up')
         gameCell.appendChild(moveup)
         setTimeout(() => {
           gameCell.removeChild(moveup)
@@ -172,8 +174,8 @@ export default class GameLogic {
         const downCell = document.querySelector(`.cell-${x + 1}-${y}`)
         if (downCell && downCell.firstElementChild)
           downCell.firstElementChild.classList.add('hide')
-        movedown.classList.add('move', 'down')
         movedown.style.background = `radial-gradient(circle at 30% 30%, ${color}, black)`
+        movedown.classList.add('move', 'down')
         gameCell.appendChild(movedown)
         setTimeout(() => {
           gameCell.removeChild(movedown)
@@ -186,8 +188,8 @@ export default class GameLogic {
         const rightCell = document.querySelector(`.cell-${x}-${y + 1}`)
         if (rightCell && rightCell.firstElementChild)
           rightCell.firstElementChild.classList.add('hide')
-        moveright.classList.add('move', 'right')
         moveright.style.background = `radial-gradient(circle at 30% 30%, ${color}, black)`
+        moveright.classList.add('move', 'right')
         gameCell.appendChild(moveright)
         setTimeout(() => {
           gameCell.removeChild(moveright)
@@ -200,8 +202,8 @@ export default class GameLogic {
         const leftCell = document.querySelector(`.cell-${x}-${y - 1}`)
         if (leftCell && leftCell.firstElementChild)
           leftCell.firstElementChild.classList.add('hide')
-        moveleft.classList.add('move', 'left')
         moveleft.style.background = `radial-gradient(circle at 30% 30%, ${color}, black)`
+        moveleft.classList.add('move', 'left')
         gameCell.appendChild(moveleft)
         setTimeout(() => {
           gameCell.removeChild(moveleft)
