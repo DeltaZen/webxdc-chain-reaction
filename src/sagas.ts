@@ -1,14 +1,17 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable no-console */
-import { call, put, takeEvery } from 'redux-saga/effects'
-import { UPDATE_FULL_STATE, updateStateFailed, updateStateSucceeded } from './actions/game'
-import GameLogic from './config/GameLogic'
+import { all, call, put, select, takeEvery } from 'redux-saga/effects'
+import { CLICK_CELL, UPDATE_FULL_STATE, updateStateFailed, updateStateSucceeded } from './actions/game'
+import GameLogic from './config/AsyncGameLogic'
+
+const getGame = state => state.game
 
 function* updateFullState(action) {
   const state = action.payload
   try {
     console.log('running saga...')
     const logic = new GameLogic(state.rows, state.cols, state.players, state.grid)
-    const gameState = yield call(() => logic.playTurn(state.click.x, state.click.y, state.currentPlayer, state.turn))
+    const gameState = yield call(async () => await logic.playTurn(state.click.x, state.click.y, state.currentPlayer, state.turn))
     console.log(gameState)
     const newState = { ...state, ...gameState }
     yield put(updateStateSucceeded(newState))
@@ -19,8 +22,48 @@ function* updateFullState(action) {
   }
 }
 
+function* clickCell(action) {
+  try {
+    const state = yield select(getGame)
+    // console.log(state)
+    const { x, y } = action.payload
+    if (!state.gameEnded) {
+      const logic = new GameLogic(state.rows, state.cols, state.players, state.grid)
+      const gameState = yield call(async () => await logic.playTurn(x, y, state.currentPlayer, state.turn))
+      //   console.log(gameState)
+
+      // send update as well
+      const text = gameState.gameEnded ? `${gameState.players[gameState.currentPlayer].nick} won!` : `It's ${gameState.players[gameState.currentPlayer].nick} turn`
+      window.webxdc.sendUpdate({
+        payload: {
+          type: CLICK_CELL,
+          state: {
+            ...state,
+            // ...newState,
+            click: {
+              x,
+              y,
+            },
+          },
+        },
+        info: text,
+      }, text)
+      yield put(updateStateSucceeded(state))
+    }
+    else {
+      yield put(updateStateSucceeded(state))
+    }
+  }
+  catch (e) {
+    console.log(e)
+    // yield put(updateStateFailed(state))
+  }
+}
+
 function* MySaga() {
-  yield takeEvery(UPDATE_FULL_STATE, updateFullState)
+  // yield takeEvery(UPDATE_FULL_STATE, updateFullState)
+  yield all([takeEvery(UPDATE_FULL_STATE, updateFullState), takeEvery(CLICK_CELL, clickCell)])
+  //   yield takeEvery(CLICK_CELL, clickCell)
 }
 
 export default MySaga

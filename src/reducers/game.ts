@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import range from 'lodash/range'
 
 import { CLICK_CELL, INIT_GAME, MODIFY_PLAYER, RESET_GAME, UPDATE_ADMIN_STATE, UPDATE_FULL_STATE_FAILED, UPDATE_FULL_STATE_SUCCEEDED } from '../actions/game'
@@ -117,39 +118,34 @@ const game = (state = INITIAL_STATE, action) => {
         playerAddr,
       }
     }
-    case CLICK_CELL: {
-      const { x, y } = action.payload
-      const { currentPlayer, rows, cols, players, grid, turn } = state
+    // case CLICK_CELL: {
+    //   const { x, y } = action.payload
+    //   const { currentPlayer, rows, cols, players, grid, turn } = state
 
-      if (!state.gameEnded) {
-        const logic = new GameLogic(rows, cols, players, grid)
-        const newState = logic.playTurn(x, y, currentPlayer, turn)
+    //   if (!state.gameEnded) {
+    //     const logic = new GameLogic(rows, cols, players, grid)
+    //     const newState = logic.playTurn(x, y, currentPlayer, turn)
 
-        // send update as well
-        const text = newState.gameEnded ? `${newState.players[newState.currentPlayer].nick} won!` : `It's ${newState.players[newState.currentPlayer].nick} turn`
-        window.webxdc.sendUpdate({
-          payload: {
-            type: CLICK_CELL,
-            state: {
-              ...state,
-              // ...newState,
-              click: {
-                x,
-                y,
-              },
-            },
-          },
-          info: text,
-        }, text)
+    //     // send update as well
+    //     const text = newState.gameEnded ? `${newState.players[newState.currentPlayer].nick} won!` : `It's ${newState.players[newState.currentPlayer].nick} turn`
+    //     window.webxdc.sendUpdate({
+    //       payload: {
+    //         type: CLICK_CELL,
+    //         state: {
+    //           ...state,
+    //           // ...newState,
+    //           click: {
+    //             x,
+    //             y,
+    //           },
+    //         },
+    //       },
+    //       info: text,
+    //     }, text)
+    //   }
 
-        return {
-          ...state,
-          ...newState,
-        }
-      }
-
-      return state
-    }
+    //   return state
+    // }
     case MODIFY_PLAYER: {
       const { nick, address } = action.payload
       const { players } = state
