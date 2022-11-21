@@ -13,6 +13,7 @@ export interface AppProps {
   click?: {
     x: number
     y: number
+    addr?: string
   }
   reset: () => unknown
   update: (state: UpdateState) => void
@@ -97,5 +98,6 @@ export interface UpdateState {
   click?: {
     x: number
     y: number
+    addr?: string
   }
 }
