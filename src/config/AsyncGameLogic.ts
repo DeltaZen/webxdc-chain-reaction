@@ -28,8 +28,9 @@ export default class GameLogic {
   turn: number
   cellsActivated: number
   turnPlayed = false
+  animate = true
 
-  constructor(rows, cols, players, grid) {
+  constructor(rows, cols, players, grid, animate = true) {
     this.rows = rows
     this.cols = cols
     this.currentPlayer = -1
@@ -39,6 +40,7 @@ export default class GameLogic {
     this.y = -1
     this.turn = 0
     this.cellsActivated = 0
+    this.animate = animate
   }
 
   playTurn = async (x, y, currentPlayer, turn) => {
@@ -140,7 +142,7 @@ export default class GameLogic {
     }
 
     // add animation
-    this.addAnimation(x, y)
+    this.animate && this.addAnimation(x, y)
     await sleep(500)
 
     const adjacentCells = this.getAdjacentCellsCoordinates(x, y)
