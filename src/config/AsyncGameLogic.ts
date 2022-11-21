@@ -154,6 +154,13 @@ export default class GameLogic {
     const gameCell = document.querySelector(`.cell-${x}-${y}`)
     const color = this.players[this.currentPlayer].color
     if (gameCell) {
+      // remove all element with class 'hide'
+      const hidden = document.querySelectorAll('.hide')
+      for (let i = 0; i < hidden.length; i++) {
+        const element = hidden[i]
+        element.classList.remove('hide')
+      }
+
       if (x > 0) {
         const moveup = document.createElement('div')
         const upCell = document.querySelector(`.cell-${x - 1}-${y}`)
