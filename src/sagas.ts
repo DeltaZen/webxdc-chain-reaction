@@ -23,7 +23,7 @@ function* clickCell(action) {
     // console.log(state)
     const { x, y } = action.payload
     if (!state.gameEnded) {
-      const logic = new GameLogic(state.rows, state.cols, state.players, state.grid)
+      const logic = new GameLogic(state.rows, state.cols, state.players, state.grid, false)
       const gameState = yield call(async () => await logic.playTurn(x, y, state.currentPlayer, state.turn))
       //   console.log(gameState)
 
@@ -38,6 +38,7 @@ function* clickCell(action) {
             click: {
               x,
               y,
+              addr: state.playerAddr,
             },
           },
         },
