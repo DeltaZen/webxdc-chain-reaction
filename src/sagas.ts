@@ -3,16 +3,24 @@ import { CLICK_CELL, UPDATE_FULL_STATE, updateStateFailed, updateStateSucceeded 
 import GameLogic from './config/AsyncGameLogic'
 
 const getGame = state => state.game
+const playerAddr = window.webxdc.selfAddr
 
 function* updateFullState(action) {
   const state = action.payload
   try {
-    const logic = new GameLogic(state.rows, state.cols, state.players, state.grid)
+    // show moves only if you are not who played
+    const showMoves = state.click?.addr !== playerAddr
+    const logic = new GameLogic(state.rows, state.cols, state.players, state.grid, showMoves)
     const gameState = yield call(async () => await logic.playTurn(state.click.x, state.click.y, state.currentPlayer, state.turn))
     const newState = { ...state, ...gameState }
+    // eslint-disable-next-line no-console
+    // console.log('Player that clicked: ', state.click.addr, '\nCurrent: ', playerAddr)
     yield put(updateStateSucceeded(newState))
   }
   catch (e) {
+    // eslint-disable-next-line no-console
+    // console.log('No click info')
+
     yield put(updateStateFailed(state))
   }
 }
@@ -23,7 +31,7 @@ function* clickCell(action) {
     // console.log(state)
     const { x, y } = action.payload
     if (!state.gameEnded) {
-      const logic = new GameLogic(state.rows, state.cols, state.players, state.grid, false)
+      const logic = new GameLogic(state.rows, state.cols, state.players, state.grid, true)
       const gameState = yield call(async () => await logic.playTurn(x, y, state.currentPlayer, state.turn))
       //   console.log(gameState)
 
@@ -38,13 +46,15 @@ function* clickCell(action) {
             click: {
               x,
               y,
-              addr: state.playerAddr,
+              addr: playerAddr,
             },
           },
         },
         info: text,
       }, text)
-      yield put(updateStateSucceeded(state))
+      // eslint-disable-next-line no-console
+      // console.log('Player that clicked: ', playerAddr)
+      yield put(updateStateSucceeded({ ...state, ...gameState }))
     }
     else {
       yield put(updateStateSucceeded(state))
