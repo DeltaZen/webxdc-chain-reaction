@@ -105,7 +105,7 @@ export default class GameLogic {
   }
 
   activateCell = async (x, y) => {
-    if (this.cellsActivated > 1000) {
+    if (this.cellsActivated > 50) {
       if (!this.hasGameEnded())
         throw new Error('Too many cells blew, the game can\'t take it.')
 
