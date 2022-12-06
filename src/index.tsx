@@ -8,6 +8,9 @@ import App from './App'
 import configureStore from './config/store'
 import { initGame } from './actions/game'
 
+import MySaga from './sagas'
+import { sagaMiddleware } from './config/store'
+
 const tempState = localStorage.getItem('reduxState')
 const persistedState
   = tempState
@@ -15,6 +18,8 @@ const persistedState
     : {}
 
 const store = configureStore(persistedState)
+
+sagaMiddleware.run(MySaga)
 
 store.subscribe(() => {
   localStorage.setItem('reduxState', JSON.stringify(store.getState()))

@@ -1,11 +1,15 @@
-import { createStore } from 'redux'
-
+import { applyMiddleware, legacy_createStore as createStore } from 'redux'
+import createSagaMiddleware from 'redux-saga'
 import reducers from '../reducers'
 
-export default function configureStore(persistedState) {
+export const sagaMiddleware = createSagaMiddleware()
+
+function configureStore(persistedState) {
   return createStore(
     reducers,
     persistedState,
-    // window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
+    applyMiddleware(sagaMiddleware),
   )
 }
+
+export default configureStore

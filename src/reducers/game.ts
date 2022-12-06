@@ -1,7 +1,7 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import range from 'lodash/range'
 
-import { CLICK_CELL, INIT_GAME, MODIFY_PLAYER, RESET_GAME, UPDATE_ADMIN_STATE, UPDATE_FULL_STATE } from '../actions/game'
-import GameLogic from '../config/GameLogic'
+import { INIT_GAME, MODIFY_PLAYER, RESET_GAME, UPDATE_ADMIN_STATE, UPDATE_FULL_STATE_FAILED, UPDATE_FULL_STATE_SUCCEEDED } from '../actions/game'
 
 import type { Player } from '../interfaces'
 
@@ -117,39 +117,6 @@ const game = (state = INITIAL_STATE, action) => {
         playerAddr,
       }
     }
-    case CLICK_CELL: {
-      const { x, y } = action.payload
-      const { currentPlayer, rows, cols, players, grid, turn } = state
-
-      if (!state.gameEnded) {
-        const logic = new GameLogic(rows, cols, players, grid)
-        const newState = logic.playTurn(x, y, currentPlayer, turn)
-
-        // send update as well
-        const text = newState.gameEnded ? `${newState.players[newState.currentPlayer].nick} won!` : `It's ${newState.players[newState.currentPlayer].nick} turn`
-        window.webxdc.sendUpdate({
-          payload: {
-            type: CLICK_CELL,
-            state: {
-              ...state,
-              // ...newState,
-              click: {
-                x,
-                y,
-              },
-            },
-          },
-          info: text,
-        }, text)
-
-        return {
-          ...state,
-          ...newState,
-        }
-      }
-
-      return state
-    }
     case MODIFY_PLAYER: {
       const { nick, address } = action.payload
       const { players } = state
@@ -176,17 +143,18 @@ const game = (state = INITIAL_STATE, action) => {
 
       return state
     }
-    case UPDATE_FULL_STATE: {
+    case UPDATE_FULL_STATE_SUCCEEDED: {
       const state = action.payload
 
-      let newState = state
-      if (state.click) {
-        const logic = new GameLogic(state.rows, state.cols, state.players, state.grid)
-        newState = logic.playTurn(state.click.x, state.click.y, state.currentPlayer, state.turn)
+      return {
+        ...state, playerName, playerAddr,
       }
+    }
+    case UPDATE_FULL_STATE_FAILED: {
+      const state = action.payload
 
       return {
-        ...state, ...newState, playerName, playerAddr,
+        ...state, playerName, playerAddr,
       }
     }
     case UPDATE_ADMIN_STATE: {

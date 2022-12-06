@@ -10,6 +10,11 @@ export interface AppProps {
   players: Player[]
   playerName: string
   playerAddr: string
+  click?: {
+    x: number
+    y: number
+    addr?: string
+  }
   reset: () => unknown
   update: (state: UpdateState) => void
   adminUpdate: (state: UpdateState) => void
@@ -93,5 +98,6 @@ export interface UpdateState {
   click?: {
     x: number
     y: number
+    addr?: string
   }
 }

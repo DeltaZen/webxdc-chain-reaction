@@ -48,7 +48,7 @@ class App extends Component<AppProps> {
     playerAddr,
   })
 
-  componentDidMount(): void {
+  async componentDidMount() {
     window.webxdc.setUpdateListener((update: ReceivedStatusUpdate<CRUpdate>) => {
       const lastSerial = parseInt(localStorage.getItem('last-serial') ?? '0')
       if (
@@ -101,6 +101,12 @@ class App extends Component<AppProps> {
               )
             )
               return
+            // eslint-disable-next-line no-console
+            // state.click && console.log('received move from: ', state.click.addr)
+
+            // ignore update if it was my move
+            // if (state.click && playerAddr === state.click.addr)
+            //   return
 
             this.props.update(state)
           }
